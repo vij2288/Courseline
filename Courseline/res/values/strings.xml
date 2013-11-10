@@ -14,11 +14,15 @@
     <string name="logo_desc">This is our logo</string>
     <string name="f_name">First Name</string>
     <string name="l_name">Last Name</string>
+    <string name="re_pwd">Re-type Password</string>
     <string name="g_year">Graduation year</string>
     <string name="d_code">Department code</string>
     <string name="u_pic">Upload pic</string>
     <string name="c_code">Course code</string>
     <string name="search">Search</string>
+    <string name="add_c">Add Course</string>
+    <string name="delete_c">Delete Course</string>
+    <string name="add_note">Add Notes</string>
     <string name="title_activity_addition">AdditionActivity</string>
     <string name="title_activity_deletion">DeletionActivity</string>
     <string name="title_activity_home">HomeActivity</string>

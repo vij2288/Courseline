@@ -18,37 +18,23 @@
         android:src="@drawable/courseline_logo" />
 
     <EditText
-        android:id="@+id/editText1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="23dp"
-        android:ems="10"
-        android:hint="@string/f_name"
-        android:inputType="textPersonName" >
-
-        <requestFocus />
-    </EditText>
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText4"
-        android:layout_below="@+id/editText4"
-        android:layout_marginTop="17dp"
-        android:text="@string/u_pic" />
-
-    <EditText
         android:id="@+id/editText2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText1"
         android:layout_below="@+id/editText1"
-        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"
         android:ems="10"
         android:hint="@string/l_name"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editText2"
+        android:layout_below="@+id/imageView1"
+        android:ems="10"
+        android:hint="@string/f_name"
         android:inputType="textPersonName" />
 
     <EditText
@@ -56,30 +42,47 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/editText2"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/editText2"
         android:ems="10"
-        android:hint="@string/d_code"
-        android:inputType="number" />
+        android:hint="@string/email_address"
+        android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/editText4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText3"
         android:layout_below="@+id/editText3"
-        android:layout_marginTop="14dp"
+        android:layout_centerHorizontal="true"
         android:ems="10"
-        android:hint="@string/g_year"
-        android:inputType="number" />
+        android:hint="@string/pwd"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/editText5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editText4"
+        android:layout_below="@+id/editText4"
+        android:ems="10"
+        android:hint="@string/re_pwd"
+        android:inputType="textPassword" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/button1"
-        android:layout_alignRight="@+id/editText4"
+        android:layout_alignRight="@+id/editText3"
         android:layout_below="@+id/button1"
-        android:layout_marginTop="24dp"
         android:text="@string/sign_up" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editText3"
+        android:layout_below="@+id/editText5"
+        android:layout_marginTop="16dp"
+        android:text="@string/u_pic" />
 
 </RelativeLayout>

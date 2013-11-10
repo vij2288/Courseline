@@ -43,7 +43,7 @@
             android:label="@string/title_activity_home" >
         </activity>
         <activity
-            android:name="deccan.courseline.SubjectActivity"
+            android:name="deccan.courseline.SubmissionActivity"
             android:label="@string/title_activity_subject" >
         </activity>
     </application>
