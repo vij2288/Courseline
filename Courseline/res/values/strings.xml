@@ -4,5 +4,24 @@
     <string name="app_name">Courseline</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="welcome">Welcome</string>
+    <string name="email_address">Email Address</string>
+    <string name="pwd">Password</string>
+    <string name="logo_desc">This is our logo</string>
+    <string name="f_name">First Name</string>
+    <string name="l_name">Last Name</string>
+    <string name="g_year">Graduation year</string>
+    <string name="d_code">Department code</string>
+    <string name="u_pic">Upload pic</string>
+    <string name="c_code">Course code</string>
+    <string name="search">Search</string>
+    <string name="title_activity_addition">AdditionActivity</string>
+    <string name="title_activity_deletion">DeletionActivity</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_subject">SubjectActivity</string>
 
 </resources>
