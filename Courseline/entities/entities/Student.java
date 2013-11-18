@@ -1,8 +1,9 @@
 package entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Student {
+public class Student implements Serializable {
 	// Student Credentials
 	private String emailId;
 	private String firstName;
@@ -10,7 +11,7 @@ public class Student {
 	private String univ;
 
 	// Courses added
-	public ArrayList<String> courses;
+	public ArrayList<Course> courses = new ArrayList<Course>();
 
 	// Profile pic location
 	private String profilePicPath;
@@ -55,4 +56,13 @@ public class Student {
 	public void setProfilePicPath(String profilePicPath) {
 		this.profilePicPath = profilePicPath;
 	}
+
+	@Override
+	public String toString() {
+		return "Student [emailId=" + emailId + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", univ=" + univ + ", courses="
+				+ courses + ", profilePicPath=" + profilePicPath + "]";
+	}
+	
+	
 }

@@ -25,7 +25,7 @@
     <string name="add_note">Add Notes</string>
     <string name="title_activity_addition">AdditionActivity</string>
     <string name="title_activity_deletion">DeletionActivity</string>
-    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_home">Dashboard</string>
     <string name="title_activity_subject">SubjectActivity</string>
 
 </resources>

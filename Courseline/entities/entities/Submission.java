@@ -5,15 +5,16 @@ import java.util.Date;
 
 public class Submission {
 	private String subName;
+	private int subId;
 	private SubType subType;
 	private Date releaseDate;
 	private Date dueDate;
 	private int weightPercent; // percentage grading
 	private int weightPoints; // absolute weightage
 	private String description;
-	public ArrayList<String> instructorNotes;
-	public ArrayList<String> studentNotes;
-	public ArrayList<String> studentPicsPaths;
+	public ArrayList<String> instructorNotes = new ArrayList<String>();
+	public ArrayList<String> studentNotes = new ArrayList<String>();
+	public ArrayList<String> studentPicsPaths = new ArrayList<String>();
 
 	// Setters and Getters
 	public String getSubName() {
@@ -71,4 +72,25 @@ public class Submission {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public int getSubId() {
+		return subId;
+	}
+
+	public void setSubId(int subId) {
+		this.subId = subId;
+	}
+
+	@Override
+	public String toString() {
+		return "Submission [subName=" + subName + ", subId=" + subId
+				+ ", subType=" + subType + ", releaseDate=" + releaseDate
+				+ ", dueDate=" + dueDate + ", weightPercent=" + weightPercent
+				+ ", weightPoints=" + weightPoints + ", description="
+				+ description + ", instructorNotes=" + instructorNotes
+				+ ", studentNotes=" + studentNotes + ", studentPicsPaths="
+				+ studentPicsPaths + "]";
+	}
+	
+	
 }
