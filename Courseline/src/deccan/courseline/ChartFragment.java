@@ -63,28 +63,7 @@ public class ChartFragment extends Fragment {
 		fixedTicketSeries.add(4f, 1, 3);
 		fixedTicketSeries.add(5f, 1, 1);
 		series.addSeries(fixedTicketSeries);
-/*
-		XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
-		renderer.setAxisTitleTextSize(16);
-		renderer.setChartTitleTextSize(20);
-		renderer.setLabelsTextSize(15);
-		renderer.setRange(new double[] { 0, 6, 0, 6 });
-
-		// renderer.setMargins(new int[] { 20, 30, 15, 0 });
-		XYSeriesRenderer newTicketRenderer = new XYSeriesRenderer();
-		newTicketRenderer.setColor(Color.BLUE);
-		renderer.addSeriesRenderer(newTicketRenderer);
-		XYSeriesRenderer fixedTicketRenderer = new XYSeriesRenderer();
-		fixedTicketRenderer.setColor(Color.GREEN);
-		renderer.addSeriesRenderer(fixedTicketRenderer);
-
-		renderer.setXLabels(0);
-		renderer.setYLabels(0);
-		renderer.setDisplayChartValues(false);
-		renderer.setShowGrid(false);
-		renderer.setShowLegend(false);
-		renderer.setShowLabels(true);
-*/		
+	
 	    XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
 	    renderer.setAxisTitleTextSize(16);
 	    renderer.setChartTitleTextSize(20);
