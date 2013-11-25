@@ -27,5 +27,6 @@
     <string name="title_activity_deletion">DeletionActivity</string>
     <string name="title_activity_home">Dashboard</string>
     <string name="title_activity_subject">SubjectActivity</string>
+    <string name="delete_head"></string>
 
 </resources>

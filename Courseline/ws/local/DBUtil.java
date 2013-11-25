@@ -13,8 +13,11 @@ public class DBUtil extends SQLiteOpenHelper {
 	
 	private static String databaseName = "CourselineDB";
 	private static int databaseVersion =1;
+	
 	private static String userTable="Users";
 	private static String courseTable="Courses";
+	private static String subTable="Submissions";
+	
 	private static String userColumn1="Name";
 	private static String userColumn2="UserID";
 	private static String userColumn3="Course1";
@@ -22,6 +25,8 @@ public class DBUtil extends SQLiteOpenHelper {
 	private static String userColumn5="Course3";
 	private static String userColumn6="Course4";
 	private static String userColumn7="Course5";
+	private static String userColumn8="ProfilePic";
+	
 	private static String courseColumn1="CourseName";
 	private static String courseColumn2="CourseID";
 	private static String courseColumn3="Semester";
@@ -31,8 +36,19 @@ public class DBUtil extends SQLiteOpenHelper {
 	private static String courseColumn7="ReleaseDate";
 	private static String courseColumn8="DueDate";
 	private static String courseColumn9="WeightPercentage";
-	private static String courseColumn10="WeightPonts";
+	private static String courseColumn10="WeightPonits";
 	private static String courseColumn11="Desc";
+	
+	private static String subColumn1="UserID";
+	private static String subColumn2="CourseID";
+	private static String subColumn3="SubID";
+	private static String subColumn4="Pic1";
+	private static String subColumn5="Pic2";
+	private static String subColumn6="Pic3";
+	private static String subColumn7="Pic4";
+	private static String subColumn8="Pic5";
+	private static String subColumn9="Notes";
+	
 	
 	
 	public DBUtil(Context context){
@@ -48,7 +64,8 @@ public class DBUtil extends SQLiteOpenHelper {
 				+userColumn4+", "
 				+userColumn5+", "
 				+userColumn6+", "
-				+userColumn7+");";
+				+userColumn7+", "
+				+userColumn8+" BLOB);";
 		db.execSQL(sql);	
 		
 		sql="CREATE TABLE "+courseTable+" ("
@@ -63,7 +80,19 @@ public class DBUtil extends SQLiteOpenHelper {
 				+courseColumn9+","
 				+courseColumn10+","
 				+courseColumn11+");";
-		db.execSQL(sql);		
+		db.execSQL(sql);	
+		
+		sql="CREATE TABLE "+subTable+" ("
+				+subColumn1+" NOT NULL, "
+				+subColumn2+" NOT NULL,"
+				+subColumn3+" NOT NULL,"
+				+subColumn4+" BLOB,"
+				+subColumn5+" BLOB,"
+				+subColumn6+" BLOB,"
+				+subColumn7+" BLOB,"
+				+subColumn8+" BLOB,"
+				+subColumn9+");";
+		db.execSQL(sql);
 	}
 
 	@Override
@@ -72,10 +101,14 @@ public class DBUtil extends SQLiteOpenHelper {
 		db.execSQL(sql);
 		sql="DROP TABLE IF EXISTS "+courseTable;
 		db.execSQL(sql);
+		sql="DROP TABLE IF EXISTS "+subTable;
+		db.execSQL(sql);
 		onCreate(db);		
 	}
 	
-	public long insertUser(String name,String userID,int c1,int c2,int c3,int c4,int c5){
+	/* Insert values into user table */
+	public long insertUser(String name,String userID,String c1,String c2,String c3,
+			String c4,String c5, byte[] profilePic){
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		Log.d("sumne","came into insert");
@@ -86,10 +119,11 @@ public class DBUtil extends SQLiteOpenHelper {
 		values.put(userColumn5, c3);
 		values.put(userColumn6, c4);
 		values.put(userColumn7, c5);
+		values.put(userColumn8, profilePic);
 		return db.insert(userTable,null, values);
 	}
 	
-	public long insertCourse(String cName,int cID,String sem,int subID,String subName,
+	public long insertCourse(String cName,String cID,String sem,String subID,String subName,
 			String subType,Date rDate,Date dDate,int wPercent,int wPoints,String desc){
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
@@ -107,17 +141,40 @@ public class DBUtil extends SQLiteOpenHelper {
 		return db.insert(courseTable, null, values);
 	}
 	
+	public long insertSub(String userID,String cID,String subID,byte[] pic1,byte[] pic2, byte[] pic3,
+			byte[] pic4,byte[] pic5,String notes){
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put(subColumn1, userID);
+		values.put(subColumn2, cID);
+		values.put(subColumn3, subID);
+		values.put(subColumn4, pic1);
+		values.put(subColumn5, pic2);
+		values.put(subColumn6, pic3);
+		values.put(subColumn7, pic4);
+		values.put(subColumn8, pic5);
+		values.put(subColumn9, notes);		
+		return db.insert(subTable, null, values);		
+	}
+	
 	public Cursor selectUser(String userID){
 		System.out.println("inside select");
 		Log.d("sumne","inside select");
 		SQLiteDatabase db = this.getReadableDatabase();
-		String sql = "SELECT * FROM "+userTable+" where "+userColumn2+" ="+"'"+userID+"';";
+		String sql = "SELECT * FROM "+userTable+" WHERE "+userColumn2+" ="+"'"+userID+"';";
 		return db.rawQuery(sql,null);
 	}
 	
-	public Cursor selectCourse(int cID){
+	public Cursor selectCourse(String cID){
 		SQLiteDatabase db = this.getReadableDatabase();
-		String sql = "SELECT * FROM "+userTable+" where "+userColumn2+" ="+"'"+cID+"';";
+		String sql = "SELECT * FROM "+userTable+" WHERE "+userColumn2+" ="+"'"+cID+"';";
+		return db.rawQuery(sql,null);
+	}
+	
+	public Cursor selectSub(String userID,String cID,String subID){
+		SQLiteDatabase db = this.getReadableDatabase();
+		String sql = "SELECT * FROM "+subTable+" WHERE "+subColumn1+" ="+"'"+userID+"'"+
+				" AND "+subColumn2+" ="+"'"+cID+"'"+" AND "+subColumn3+" ="+"'"+subID+"';";
 		return db.rawQuery(sql,null);
 	}
 	
@@ -129,14 +186,21 @@ public class DBUtil extends SQLiteOpenHelper {
 		db.delete(userTable, whereClause, whereArgs);
 	}
 	
-	public void deleteCourse(int cID){
+	public void deleteCourse(String cID){
 		SQLiteDatabase db = this.getWritableDatabase();
 		String whereClause=courseColumn2+" =?";
-		String[] whereArgs={Integer.toString(cID)};
+		String[] whereArgs={cID};
 		db.delete(courseTable, whereClause, whereArgs);
 	}
 	
-	public void updateUser(String userID,int c1,int c2,int c3,int c4,int c5){
+	public void deleteSub(String userID,String cID,String subID){
+		SQLiteDatabase db = this.getWritableDatabase();
+		String whereClause=subColumn1+" =?"+" AND"+subColumn2+" =?"+" AND"+subColumn3;
+		String[] whereArgs={userID,cID,subID};
+		db.delete(courseTable, whereClause, whereArgs);		
+	}
+	
+	public void updateUser(String userID,String c1,String c2,String c3,String c4,String c5){
 		SQLiteDatabase db = this.getWritableDatabase();
 		String whereClause=userColumn2+" =?";
 		String[] whereArgs={userID};
@@ -149,4 +213,19 @@ public class DBUtil extends SQLiteOpenHelper {
 		db.update(userTable, values, whereClause, whereArgs);		
 	}
 	
+	public void updateSub(String userID,String cID,String subID,byte[] pic1,byte[] pic2, byte[] pic3,
+			byte[] pic4,byte[] pic5,String notes){
+		SQLiteDatabase db = this.getWritableDatabase();
+		String whereClause=subColumn1+" =?"+" AND"+subColumn2+" =?"+" AND"+subColumn3;
+		String[] whereArgs={userID,cID,subID};
+		ContentValues values = new ContentValues();
+		values.put(subColumn4, pic1);
+		values.put(subColumn5, pic2);
+		values.put(subColumn6, pic3);
+		values.put(subColumn7, pic4);
+		values.put(subColumn8, pic5);
+		values.put(subColumn9, notes);
+		db.update(subTable, values, whereClause, whereArgs);		
+	}
+   
 }
