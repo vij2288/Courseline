@@ -160,7 +160,7 @@ public class DBUtil extends SQLiteOpenHelper {
 
 	public Cursor selectCourse(String cID) {
 		SQLiteDatabase db = this.getReadableDatabase();
-		String sql = "SELECT * FROM " + userTable + " WHERE " + userColumn2
+		String sql = "SELECT * FROM " + courseTable + " WHERE " + courseColumn2
 				+ " =" + "'" + cID + "';";
 		return db.rawQuery(sql, null);
 	}
