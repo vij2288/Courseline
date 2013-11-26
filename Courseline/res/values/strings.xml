@@ -6,8 +6,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_search">SearchActivity</string>
-    <string name="sign_in">Sign in</string>
-    <string name="sign_up">Sign up</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
     <string name="welcome">Welcome</string>
     <string name="email_address">Email Address</string>
     <string name="pwd">Password</string>
@@ -28,5 +28,8 @@
     <string name="title_activity_home">Dashboard</string>
     <string name="title_activity_subject">SubjectActivity</string>
     <string name="delete_head"></string>
+    <string name="notReg">Not Registered? Please Sign Up.</string>
+    <string name="search_hint">Enter Course Number</string>
+    <string name="desc">Search button</string>
 
 </resources>

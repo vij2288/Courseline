@@ -9,12 +9,22 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TableRow;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
 	Student student = null;
 	DBUtil mdb;
+	boolean loginSuccess = false;
+	Cursor mCursor;
+	EditText email = null, pwd = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,15 +32,73 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.deccan_courseline_activity_main);
 		
 		mdb=new DBUtil(this);
-		Cursor mCursor;
 		student = new Student();
+
+		email = (EditText) findViewById(R.id.loginEmail);
+		pwd = (EditText) findViewById(R.id.loginPassword);
+		Button signin = (Button) findViewById(R.id.signinButton);
+		Button signup = (Button) findViewById(R.id.signupButton);
 		
+		signin.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				mCursor=mdb.selectUser(email.getText().toString());
+				
+				String userID = email.getText().toString();
+				// if entry exists
+				if(mCursor.getCount()>0){
+					mCursor.moveToFirst();
+					String pwd1=mCursor.getString(7);
+					
+					Log.d("LOGIN", "pwd:" + pwd.getText().toString() + " pwd1: " + pwd1);
+					// if password matches
+					if(pwd.getText().toString().equals(pwd1)){
+						Intent main2home = new Intent(getBaseContext(), HomeActivity.class);
+						main2home.putExtra("userID", userID);
+						startActivity(main2home);						
+					} else {
+						email.setText("");
+						pwd.setText("");
+						Toast.makeText(getBaseContext(),"Login incorrect!",Toast.LENGTH_LONG).show();
+					}
+				} else {
+					email.setText("");
+					pwd.setText("");
+					Toast toast = Toast.makeText(getBaseContext(),"Account not found!",Toast.LENGTH_LONG);
+					toast.setGravity(Gravity.CENTER, 0, 0);
+					toast.show();
+				}
+			}
+		});
+		
+		signup.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				Intent main2reg = new Intent(getBaseContext(), RegisterActivity.class);
+				startActivity(main2reg);	
+			}
+		});
+
+		/*
 		// Parse static file
 		String filename = Environment.getExternalStorageDirectory().getPath()
 				+ "/Download/cmu_f13_15213.xml";
 		System.out.println("Static file path: " + filename);
 		LocalUtil.ImportCourseData(student, filename);
+		
+		filename = Environment.getExternalStorageDirectory().getPath()
+				+ "/Download/cmu_f13_18641.xml";
+		System.out.println("Static file path: " + filename);
+		LocalUtil.ImportCourseData(student, filename);
+		
+		filename = Environment.getExternalStorageDirectory().getPath()
+				+ "/Download/cmu_f13_18644.xml";
+		System.out.println("Static file path: " + filename);
+		LocalUtil.ImportCourseData(student, filename);
+		
 		System.out.println(student.toString());
+		*/
+		
 	/* ***************************Database testing******************************************************* 	
 	 * ******************************DONT DELETE*********************************************************
 	 * **************************************************************************************************
@@ -58,9 +126,9 @@ public class MainActivity extends Activity {
 		*/
 		
 		
-		Intent main2home = new Intent(getBaseContext(), HomeActivity.class);
-		//main2home.putExtra("student", student);
-		startActivity(main2home);
+	/*	Intent main2home = new Intent(getBaseContext(), HomeActivity.class);
+		main2home.putExtra("student", student);
+		startActivity(main2home);*/
 	}
 
 	@Override

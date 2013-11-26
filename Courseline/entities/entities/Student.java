@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Student implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// Student Credentials
 	private String emailId;
 	private String firstName;
@@ -12,9 +16,6 @@ public class Student implements Serializable {
 
 	// Courses added
 	public ArrayList<Course> courses = new ArrayList<Course>();
-
-	// Profile pic location
-	private String profilePicPath;
 
 	// Setters and Getters
 	public String getEmailId() {
@@ -49,19 +50,11 @@ public class Student implements Serializable {
 		this.univ = univ;
 	}
 
-	public String getProfilePicPath() {
-		return profilePicPath;
-	}
-
-	public void setProfilePicPath(String profilePicPath) {
-		this.profilePicPath = profilePicPath;
-	}
-
 	@Override
 	public String toString() {
 		return "Student [emailId=" + emailId + ", firstName=" + firstName
 				+ ", lastName=" + lastName + ", univ=" + univ + ", courses="
-				+ courses + ", profilePicPath=" + profilePicPath + "]";
+				+ courses + ", profilePicPath=" + "]";
 	}
 	
 	

@@ -27,7 +27,7 @@
         android:src="@drawable/courseline_logo" />
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/loginEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView1"
@@ -38,23 +38,43 @@
         android:inputType="textEmailAddress" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/loginPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText1"
+        android:layout_alignLeft="@+id/loginEmail"
         android:layout_centerVertical="true"
         android:ems="10"
         android:hint="@string/pwd"
         android:inputType="textPassword" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/signinButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText2"
-        android:layout_alignRight="@+id/editText1"
-        android:layout_below="@+id/editText2"
+        android:layout_alignLeft="@+id/loginPassword"
+        android:layout_alignRight="@+id/loginEmail"
+        android:layout_below="@+id/loginPassword"
         android:layout_marginTop="20dp"
         android:text="@string/sign_in" />
+
+    <Button
+        android:id="@+id/signupButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/signinButton"
+        android:layout_alignRight="@+id/signinButton"
+        android:layout_below="@+id/signinButton"
+        android:layout_marginTop="38dp"
+        android:text="@string/sign_up" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/signinButton"
+        android:layout_marginTop="16dp"
+        android:text="@string/notReg"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

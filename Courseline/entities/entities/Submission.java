@@ -1,9 +1,13 @@
 package entities;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Date;
 
-public class Submission {
+public class Submission implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String subName;
 	private int subId;
 	private SubType subType;
@@ -12,9 +16,6 @@ public class Submission {
 	private int weightPercent; // percentage grading
 	private int weightPoints; // absolute weightage
 	private String description;
-	public ArrayList<String> instructorNotes = new ArrayList<String>();
-	public ArrayList<String> studentNotes = new ArrayList<String>();
-	public ArrayList<String> studentPicsPaths = new ArrayList<String>();
 
 	// Setters and Getters
 	public String getSubName() {
@@ -87,9 +88,7 @@ public class Submission {
 				+ ", subType=" + subType + ", releaseDate=" + releaseDate
 				+ ", dueDate=" + dueDate + ", weightPercent=" + weightPercent
 				+ ", weightPoints=" + weightPoints + ", description="
-				+ description + ", instructorNotes=" + instructorNotes
-				+ ", studentNotes=" + studentNotes + ", studentPicsPaths="
-				+ studentPicsPaths + "]";
+				+ description + ", instructorNotes=" + "]";
 	}
 	
 	

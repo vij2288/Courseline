@@ -7,6 +7,7 @@ public class Course {
 	private String courseName;
 	private String courseNumber;
 	private String semester;
+	private int version;
 	public ArrayList<Submission> submissions = new ArrayList<Submission>();
 
 	// Setters and Getters
@@ -42,12 +43,18 @@ public class Course {
 		this.semester = semester;
 	}
 
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+	
 	@Override
 	public String toString() {
 		return "Course [univ=" + univ + ", courseName=" + courseName
 				+ ", courseNumber=" + courseNumber + ", semester=" + semester
 				+ ", submissions=" + submissions + "]";
 	}
-	
-	
 }

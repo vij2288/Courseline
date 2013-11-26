@@ -1,7 +1,9 @@
 package deccan.courseline;
 
+import entities.Submission;
 import android.os.Bundle;
 import android.app.Activity;
+import android.util.Log;
 import android.view.Menu;
 
 public class SubmissionActivity extends Activity {
@@ -10,6 +12,9 @@ public class SubmissionActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.deccan_courseline_activity_submission);
+		
+		Submission subm = (Submission) getIntent().getSerializableExtra("subm");
+		Log.d("SUBM", "Weightage: " + subm.getWeightPercent());
 	}
 
 	@Override

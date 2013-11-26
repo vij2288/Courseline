@@ -26,13 +26,31 @@
         android:layout_marginRight="14dp"
         android:layout_marginTop="56dp" />
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="420dp"
+    <TableLayout
+        android:id="@+id/resultsTable"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/searchText"
         android:layout_below="@+id/checkBox1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="75dp"
-        android:text="@string/add_c" />
+        android:layout_marginLeft="42dp" >
+    </TableLayout>
+
+    <ImageButton
+        android:id="@+id/searchButton"
+        android:contentDescription="@string/desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/imageView1"
+        android:layout_below="@+id/imageView1"
+        android:src="@drawable/search" />
+
+    <EditText
+        android:id="@+id/searchText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/searchButton"
+        android:layout_toLeftOf="@+id/searchButton"
+        android:ems="10"
+        android:hint="@string/search_hint" />
 
 </RelativeLayout>

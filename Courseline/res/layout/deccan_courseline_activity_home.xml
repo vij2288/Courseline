@@ -5,24 +5,59 @@
     tools:context=".HomeActivity" >
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/delete"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/button1"
+        android:layout_toRightOf="@+id/add"
         android:text="@string/delete_c" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/add"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="5dp"
-        android:paddingTop="5dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
         android:text="@string/add_c" />
 
+    <TableLayout
+        android:id="@+id/tableFilters"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingBottom="500dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="60dp" >
+
+        <TableRow
+            android:id="@+id/rowName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+        </TableRow>
+        
+        <TableRow
+            android:id="@+id/rowFilters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TableLayout
+                android:id="@+id/tableCourses"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" >
+            </TableLayout>
+
+            <TableLayout
+                android:id="@+id/tableSubmissions"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" >
+            </TableLayout>
+        </TableRow>
+    </TableLayout>
+ 
     <LinearLayout
         android:id="@+id/chartView"
+        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_alignParentLeft="true"
@@ -31,7 +66,7 @@
         android:paddingBottom="0dp"
         android:paddingLeft="0dp"
         android:paddingRight="0dp"
-        android:paddingTop="300dp" >
+        android:paddingTop="350dp" >
     </LinearLayout>
 
 </RelativeLayout>
