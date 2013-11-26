@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Course {
 	private String univ;
@@ -53,8 +54,18 @@ public class Course {
 	
 	@Override
 	public String toString() {
-		return "Course [univ=" + univ + ", courseName=" + courseName
+		String s1 = "Course [univ=" + univ + ", courseName=" + courseName
 				+ ", courseNumber=" + courseNumber + ", semester=" + semester
-				+ ", submissions=" + submissions + "]";
+				+ ", submissions=";
+		
+		String s2 = new String();
+		Submission s = null;
+		Iterator<Submission> it = submissions.iterator();
+		while (it.hasNext()) {
+			s = (Submission) it.next();
+			s2 += "\n" + s.toString();
+		}
+		
+		return s1 + s2 + " ]";
 	}
 }

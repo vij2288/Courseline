@@ -1,6 +1,7 @@
 package deccan.courseline;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import entities.Course;
 import entities.Student;
@@ -12,7 +13,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.app.Activity;
 import android.app.ActionBar.LayoutParams;
-import android.content.Intent;
 import android.database.Cursor;
 import android.util.Log;
 import android.view.Gravity;
@@ -20,7 +20,6 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TableLayout;
@@ -40,7 +39,7 @@ public class AdditionActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Log.d("ADDITION","Inside on create");
+		Log.d("ADDITION", "Inside on create");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.deccan_courseline_activity_addition);
 		userID = getIntent().getStringExtra("userID");
@@ -57,15 +56,16 @@ public class AdditionActivity extends Activity {
 		search.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				Log.d("ADDITION","Inside on click");
-				mCursor = mdb.selectCourse(searchText.getText().toString());
-				if (mCursor.getCount() > 0) {
-					Log.d("ADDITION","found course locally");
-					mCursor.moveToFirst();
+				Log.d("ADDITION", "Inside on click of search");
+				Course course=null;
+				course = mdb.selectCourse(searchText.getText().toString());
+				if (course!=null) {
+					Log.d("ADDITION", "found course locally");
 					TableLayout results = (TableLayout) findViewById(R.id.resultsTable);
+					results.removeAllViews();
 					TableRow row1 = new TableRow(getBaseContext());
 					TextView t1 = new TextView(getBaseContext());
-					t1.setText(mCursor.getString(0));
+					t1.setText(course.getCourseNumber());
 					t1.setTextSize(25);
 					row1.addView(t1);
 					Button b1 = new Button(getBaseContext());
@@ -79,16 +79,19 @@ public class AdditionActivity extends Activity {
 					b1.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View arg0) {
+							Log.d("ADDITION", "Inside on click of add");
 							mCursor = mdb.selectUser(userID);
 							if (mCursor.getCount() > 0) {
 								mCursor.moveToFirst();
 								if (mCursor.getInt(8) < 5) {
+									Log.d("ADDITION",
+											"got records from select user");
 									int courseCount = mCursor.getInt(8);
 									int colIndex = 2;
-									Boolean found = false;
+									boolean found = false;
 									while (courseCount > 0) {
-										if (mCursor.getString(colIndex) == searchText
-												.getText().toString()) {
+										if (mCursor.getString(colIndex).equalsIgnoreCase(searchText
+												.getText().toString())) {
 											found = true;
 											// toast present
 											Toast toast = Toast.makeText(
@@ -103,20 +106,24 @@ public class AdditionActivity extends Activity {
 										colIndex++;
 										courseCount--;
 									}
+									courseCount = mCursor.getInt(8);
 									if (found == false) {
 										switch (courseCount) {
 										case 0:
+											Log.d("ADDITION", "1st subject updated Locallly");
 											mdb.updateUser(userID, searchText
 													.getText().toString(),
 													null, null, null, null, 1);
 											break;
 										case 1:
+											Log.d("ADDITION", "2nd subject updated Locallly");
 											mdb.updateUser(userID, mCursor
 													.getString(2), searchText
 													.getText().toString(),
 													null, null, null, 2);
 											break;
 										case 2:
+											Log.d("ADDITION", "3rd subject updated Locallly");
 											mdb.updateUser(userID, mCursor
 													.getString(2), mCursor
 													.getString(3), searchText
@@ -124,6 +131,7 @@ public class AdditionActivity extends Activity {
 													null, null, 3);
 											break;
 										case 3:
+											Log.d("ADDITION", "4th subject updated Locallly");
 											mdb.updateUser(userID, mCursor
 													.getString(2), mCursor
 													.getString(3), mCursor
@@ -132,6 +140,7 @@ public class AdditionActivity extends Activity {
 													null, 4);
 											break;
 										case 4:
+											Log.d("ADDITION", "5th subject updated Locallly");
 											mdb.updateUser(userID, mCursor
 													.getString(2), mCursor
 													.getString(3), mCursor
@@ -148,6 +157,23 @@ public class AdditionActivity extends Activity {
 										toast.setGravity(Gravity.CENTER, 0, 0);
 										toast.show();
 										// intent???
+										Course c1 =mdb.selectCourse(searchText.getText().toString());
+										Log.d("ADDITION", "Course: " + c1.toString());
+										
+										mCursor=mdb.selectUser(userID);
+										if(mCursor.getCount()>0){
+											mCursor.moveToFirst();
+											String str = new String();
+											for (int i=0; i<=8; i++) {
+												if (mCursor.getString(i) != null) {
+													str += mCursor.getString(i) + ", ";
+												} else {
+													str += "null, ";
+												}
+											}
+											Log.d("ADDITION", "userTable: " + str);
+										}
+										
 									}
 
 								} else {
@@ -165,10 +191,16 @@ public class AdditionActivity extends Activity {
 				} else {
 
 					TableLayout results = (TableLayout) findViewById(R.id.resultsTable);
-					for (int i = 0; i < courses.size(); i++) {
+					results.removeAllViews();
+					Iterator<String> it = courses.iterator();
+					while (it.hasNext()) {
+						String s = it.next();
+						if (s.equalsIgnoreCase(searchText.getText().toString())) {
+
+						Log.d("ADDITION", "contacting server");
 						TableRow row1 = new TableRow(getBaseContext());
 						TextView t1 = new TextView(getBaseContext());
-						t1.setText(courses.get(i));
+						t1.setText(s);
 						t1.setTextSize(25);
 						row1.addView(t1);
 						Button b1 = new Button(getBaseContext());
@@ -198,73 +230,111 @@ public class AdditionActivity extends Activity {
 										Course course = student.courses.get(0);
 										// add to courses table
 										mdb.insertCourse(course);
+										Log.d("ADDITION", "insert done");
 										// add to users table
 										mCursor = mdb.selectUser(userID);
-										if ((mCursor.getCount() > 0)
-												&& (mCursor.getInt(8) < 5)) {
+										if (mCursor.getCount() > 0) {
+											Log.d("ADDITION",
+													"inside adding the course to user");
 											mCursor.moveToFirst();
-											int courseCount = mCursor.getInt(8);
-											switch (courseCount) {
-											case 0:
-												mdb.updateUser(userID,
-														searchText.getText()
-																.toString(),
-														null, null, null, null,
-														1);
-												break;
-											case 1:
-												mdb.updateUser(userID, mCursor
-														.getString(2),
-														searchText.getText()
-																.toString(),
-														null, null, null, 2);
-												break;
-											case 2:
-												mdb.updateUser(userID, mCursor
-														.getString(2), mCursor
-														.getString(3),
-														searchText.getText()
-																.toString(),
-														null, null, 3);
-												break;
-											case 3:
-												mdb.updateUser(userID, mCursor
-														.getString(2), mCursor
-														.getString(3), mCursor
-														.getString(4),
-														searchText.getText()
-																.toString(),
-														null, 4);
-												break;
-											case 4:
-												mdb.updateUser(userID, mCursor
-														.getString(2), mCursor
-														.getString(3), mCursor
-														.getString(4), mCursor
-														.getString(5),
-														searchText.getText()
-																.toString(), 5);
-												break;
+											if (mCursor.getInt(8) < 5) {
+												int courseCount = mCursor
+														.getInt(8);
+												switch (courseCount) {
+												case 0:
+													Log.d("ADDITION", "1st subject updated globally");
+													mdb.updateUser(
+															userID,
+															searchText
+																	.getText()
+																	.toString(),
+															null, null, null,
+															null, 1);
+													break;
+												case 1:
+													Log.d("ADDITION", "2nd subject updated globally");
+													mdb.updateUser(
+															userID,
+															mCursor.getString(2),
+															searchText
+																	.getText()
+																	.toString(),
+															null, null, null, 2);
+													break;
+												case 2:
+													Log.d("ADDITION", "3rd subject updated globally");
+													mdb.updateUser(
+															userID,
+															mCursor.getString(2),
+															mCursor.getString(3),
+															searchText
+																	.getText()
+																	.toString(),
+															null, null, 3);
+													break;
+												case 3:
+													Log.d("ADDITION", "4th subject updated globally");
+													mdb.updateUser(
+															userID,
+															mCursor.getString(2),
+															mCursor.getString(3),
+															mCursor.getString(4),
+															searchText
+																	.getText()
+																	.toString(),
+															null, 4);
+													break;
+												case 4:
+													Log.d("ADDITION", "5th subject updated globally");
+													mdb.updateUser(
+															userID,
+															mCursor.getString(2),
+															mCursor.getString(3),
+															mCursor.getString(4),
+															mCursor.getString(5),
+															searchText
+																	.getText()
+																	.toString(),
+															5);
+													break;
 
+												}
+												Toast toast = Toast.makeText(
+														getBaseContext(),
+														"Course added",
+														Toast.LENGTH_LONG);
+												toast.setGravity(
+														Gravity.CENTER, 0, 0);
+												toast.show();
+												// intent???
+												Course c1 =mdb.selectCourse(searchText.getText().toString());
+												Log.d("ADDITION", "Course: " + c1.toString());
+												
+												mCursor=mdb.selectUser(userID);
+												if(mCursor.getCount()>0){
+													mCursor.moveToFirst();
+													String str = new String();
+													for (int i=0; i<=8; i++) {
+														if (mCursor.getString(i) != null) {
+															str += mCursor.getString(i) + ", ";
+														} else {
+															str += "null, ";
+														}
+													}
+													Log.d("ADDITION", "userTable: " + str);
+												}
+												
+											} else {
+												// toast exceeded
+												Toast toast = Toast
+														.makeText(
+																getBaseContext(),
+																"You already have 5 Courses",
+																Toast.LENGTH_LONG);
+												toast.setGravity(
+														Gravity.CENTER, 0, 0);
+												toast.show();
 											}
-											Toast toast = Toast.makeText(
-													getBaseContext(),
-													"Course added",
-													Toast.LENGTH_LONG);
-											toast.setGravity(Gravity.CENTER, 0,
-													0);
-											toast.show();
-											// intent???
-										} else {
-											// toast exceeded
-											Toast toast = Toast
-													.makeText(
-															getBaseContext(),
-															"You already have 5 Courses",
-															Toast.LENGTH_LONG);
-											toast.setGravity(Gravity.CENTER, 0,
-													0);
-											toast.show();
 										}
 									}
 								} else {
@@ -278,10 +348,46 @@ public class AdditionActivity extends Activity {
 							}
 						});
 					}
-
+				}
 				}
 			}
 		});
+		mdb.close();
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+	}
+
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
 
 	}
 

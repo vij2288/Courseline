@@ -1,9 +1,13 @@
 package local;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 
 import entities.Course;
+import entities.SubType;
 import entities.Submission;
 
 import android.content.ContentValues;
@@ -158,11 +162,52 @@ public class DBUtil extends SQLiteOpenHelper {
 		return db.rawQuery(sql, null);
 	}
 
-	public Cursor selectCourse(String cID) {
+	public Course selectCourse(String cID) {
 		SQLiteDatabase db = this.getReadableDatabase();
+		Course course=null;
+		Cursor mCursor;
 		String sql = "SELECT * FROM " + courseTable + " WHERE " + courseColumn2
 				+ " =" + "'" + cID + "';";
-		return db.rawQuery(sql, null);
+		mCursor=db.rawQuery(sql, null);
+		DateFormat formatter = new SimpleDateFormat(
+				"EEE MMM dd HH:mm:ss z yyyy");
+		Date releaseDate = null;
+		Date dueDate = null;
+		if(mCursor.getCount()>0){
+			mCursor.moveToFirst();
+			Log.d("ADDITION","# OF ASSIGNMENTS: "+mCursor.getCount());
+			int count= mCursor.getCount();
+			course = new Course();
+			course.setCourseName(mCursor.getString(0));
+			course.setCourseNumber(mCursor.getString(1));
+			course.setSemester(mCursor.getString(2));
+			
+			while(count>0){
+				Submission sub=new Submission();
+				sub.setSubId(mCursor.getInt(3));
+				sub.setSubName(mCursor.getString(4));
+				sub.setSubType(SubType.valueOf(mCursor.getString(5).toUpperCase()));
+				
+				try {
+					releaseDate = formatter.parse(mCursor.getString(6));
+					dueDate = formatter.parse(mCursor.getString(7));
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				sub.setReleaseDate(releaseDate);
+				sub.setDueDate(dueDate);
+				sub.setWeightPercent(mCursor.getInt(8));
+				sub.setWeightPoints(mCursor.getInt(9));
+				sub.setDescription(mCursor.getString(10));
+				mCursor.moveToNext();
+				count--;
+				course.submissions.add(sub);
+			}
+			
+			
+		}
+		return course;
 	}
 
 	public Cursor selectSub(String userID, String cID, String subID) {

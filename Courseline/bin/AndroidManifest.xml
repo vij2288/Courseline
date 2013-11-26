@@ -15,7 +15,9 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="deccan.courseline.MainActivity"
-            android:label="@string/app_name" >
+            android:configChanges="orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,27 +26,39 @@
         </activity>
         <activity
             android:name="deccan.courseline.RegisterActivity"
-            android:label="@string/title_activity_register" >
+            android:configChanges="orientation"
+            android:label="@string/title_activity_register"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="deccan.courseline.SearchActivity"
-            android:label="@string/title_activity_search" >
+            android:configChanges="orientation"
+            android:label="@string/title_activity_search"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="deccan.courseline.AdditionActivity"
-            android:label="@string/title_activity_addition" >
+            android:configChanges="orientation"
+            android:label="@string/title_activity_addition"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="deccan.courseline.DeletionActivity"
-            android:label="@string/title_activity_deletion" >
+            android:configChanges="orientation"
+            android:label="@string/title_activity_deletion"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="deccan.courseline.HomeActivity"
-            android:label="@string/title_activity_home" >
+            android:configChanges="orientation"
+            android:label="@string/title_activity_home"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="deccan.courseline.SubmissionActivity"
-            android:label="@string/title_activity_subject" >
+            android:configChanges="orientation"
+            android:label="@string/title_activity_subject"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 

@@ -27,32 +27,32 @@ public final class R {
     }
     public static final class id {
         public static final int action_settings=0x7f08001a;
-        public static final int add=0x7f080009;
-        public static final int button1=0x7f080007;
-        public static final int chartLayout=0x7f080005;
-        public static final int chartView=0x7f08000f;
-        public static final int checkBox1=0x7f080001;
-        public static final int delete=0x7f080008;
-        public static final int delete_Text=0x7f080006;
-        public static final int firstName=0x7f080016;
+        public static final int add=0x7f080008;
+        public static final int button1=0x7f080019;
+        public static final int chartLayout=0x7f080004;
+        public static final int chartView=0x7f08000e;
+        public static final int delete=0x7f080007;
+        public static final int deleteTable=0x7f080006;
+        public static final int delete_Text=0x7f080005;
+        public static final int firstName=0x7f080015;
         public static final int imageView1=0x7f080000;
-        public static final int loginEmail=0x7f080011;
-        public static final int loginPassword=0x7f080012;
-        public static final int resultsTable=0x7f080002;
-        public static final int rowFilters=0x7f08000c;
-        public static final int rowName=0x7f08000b;
-        public static final int searchButton=0x7f080004;
-        public static final int searchText=0x7f080003;
-        public static final int signinButton=0x7f080013;
-        public static final int signupButton=0x7f080014;
-        public static final int signupEmail=0x7f080017;
-        public static final int signupPwd=0x7f080018;
-        public static final int signupRePwd=0x7f080019;
-        public static final int tableCourses=0x7f08000d;
-        public static final int tableFilters=0x7f08000a;
-        public static final int tableSubmissions=0x7f08000e;
-        public static final int textView1=0x7f080010;
-        public static final int textView2=0x7f080015;
+        public static final int loginEmail=0x7f080010;
+        public static final int loginPassword=0x7f080011;
+        public static final int resultsTable=0x7f080001;
+        public static final int rowFilters=0x7f08000b;
+        public static final int rowName=0x7f08000a;
+        public static final int searchButton=0x7f080003;
+        public static final int searchText=0x7f080002;
+        public static final int signinButton=0x7f080012;
+        public static final int signupButton=0x7f080013;
+        public static final int signupEmail=0x7f080016;
+        public static final int signupPwd=0x7f080017;
+        public static final int signupRePwd=0x7f080018;
+        public static final int tableCourses=0x7f08000c;
+        public static final int tableFilters=0x7f080009;
+        public static final int tableSubmissions=0x7f08000d;
+        public static final int textView1=0x7f08000f;
+        public static final int textView2=0x7f080014;
     }
     public static final class layout {
         public static final int deccan_courseline_activity_addition=0x7f030000;

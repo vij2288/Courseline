@@ -34,7 +34,7 @@ public class ChartFragment extends Fragment {
 	XYMultipleSeriesRenderer render = new XYMultipleSeriesRenderer();
 	XYMultipleSeriesDataset seriesV = new XYMultipleSeriesDataset();
 	int[] color = new int[]{0xffff0000, 0xffff007f, 0xff0000ff, 0xff006633, 0xff660066};
-	static int count = 0;
+	int count = 0;
 	public boolean c1 = true, c2 = true, c3 = true, c4 = true, c5 = true;
 	HashMap<LocationTuple, Submission> submMap = new HashMap<LocationTuple, Submission>(); 
 	Submission sub = new Submission();
