@@ -133,7 +133,7 @@ public class MainActivity extends Activity {
 		main2home.putExtra("student", student);
 		startActivity(main2home);*/
 	}
-	
+/*	
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -169,7 +169,7 @@ public class MainActivity extends Activity {
 		super.onDestroy();
 
 	}
-
+*/
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
