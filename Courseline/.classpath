@@ -3,10 +3,10 @@
 	<classpathentry kind="src" path="entities"/>
 	<classpathentry kind="src" path="ws"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/SMEDIKERI/Documents/GitHub/Courseline/Courseline/achartengine-1.2.0.jar"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry kind="lib" path="C:/Users/Vijith Venkatesh/Documents/GitHub/courseline/Courseline/Courseline/achartengine-1.2.0.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

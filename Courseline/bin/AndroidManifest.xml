@@ -60,6 +60,10 @@
             android:label="@string/title_activity_subject"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="deccan.courseline.NotesActivity"
+            android:label="@string/title_activity_notes" >
+        </activity>
     </application>
 
 </manifest>

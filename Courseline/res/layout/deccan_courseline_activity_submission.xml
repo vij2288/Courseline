@@ -19,13 +19,25 @@
         android:contentDescription="@string/logo_desc"
         android:src="@drawable/courseline_logo" />
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="420dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/imageView1"
-        android:layout_marginBottom="46dp"
-        android:text="@string/add_note" />
+    <TextView
+          android:id="@+id/sub_head"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignLeft="@+id/imageView1"
+          android:layout_below="@+id/imageView1"
+          android:layout_marginTop="40dp"
+          android:text="@string/sub_head"
+          android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+    <TableLayout
+          android:id="@+id/subTable"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignLeft="@+id/sub_head"
+          android:layout_below="@+id/sub_head"
+          android:paddingLeft="100dp"
+          android:layout_marginTop="86dp" >
+
+      </TableLayout>
 
 </RelativeLayout>

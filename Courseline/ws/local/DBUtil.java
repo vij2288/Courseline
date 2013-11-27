@@ -137,7 +137,7 @@ public class DBUtil extends SQLiteOpenHelper {
 
 	}
 
-	public long insertSub(String userID, String cID, String subID, byte[] pic1,
+	public long insertSub(String userID, String cID, int subID, byte[] pic1,
 			byte[] pic2, byte[] pic3, byte[] pic4, byte[] pic5, String notes) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
@@ -210,7 +210,7 @@ public class DBUtil extends SQLiteOpenHelper {
 		return course;
 	}
 
-	public Cursor selectSub(String userID, String cID, String subID) {
+	public Cursor selectSub(String userID, String cID, int subID) {
 		SQLiteDatabase db = this.getReadableDatabase();
 		String sql = "SELECT * FROM " + subTable + " WHERE " + subColumn1
 				+ " =" + "'" + userID + "'" + " AND " + subColumn2 + " =" + "'"
@@ -233,11 +233,11 @@ public class DBUtil extends SQLiteOpenHelper {
 		db.delete(courseTable, whereClause, whereArgs);
 	}
 
-	public void deleteSub(String userID, String cID, String subID) {
+	public void deleteSub(String userID, String cID, int subID) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		String whereClause = subColumn1 + " =?" + " AND" + subColumn2 + " =?"
 				+ " AND" + subColumn3;
-		String[] whereArgs = { userID, cID, subID };
+		String[] whereArgs = { userID, cID, Integer.toString(subID) };
 		db.delete(courseTable, whereClause, whereArgs);
 	}
 
@@ -256,12 +256,12 @@ public class DBUtil extends SQLiteOpenHelper {
 		db.update(userTable, values, whereClause, whereArgs);
 	}
 
-	public void updateSub(String userID, String cID, String subID, byte[] pic1,
+	public void updateSub(String userID, String cID, int subID, byte[] pic1,
 			byte[] pic2, byte[] pic3, byte[] pic4, byte[] pic5, String notes) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		String whereClause = subColumn1 + " =?" + " AND" + subColumn2 + " =?"
 				+ " AND" + subColumn3;
-		String[] whereArgs = { userID, cID, subID };
+		String[] whereArgs = { userID, cID, Integer.toString(subID) };
 		ContentValues values = new ContentValues();
 		values.put(subColumn4, pic1);
 		values.put(subColumn5, pic2);
