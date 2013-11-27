@@ -30,6 +30,8 @@ public class SubmissionActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.deccan_courseline_activity_submission);
+		
+		mdb=new DBUtil(this);
 
 		userID = getIntent().getStringExtra("userID");
 		Log.d("SUBM", "User ID: " + userID);
@@ -102,6 +104,7 @@ public class SubmissionActivity extends Activity {
 					if (mCursor.getCount() > 0) {
 						mCursor.moveToFirst();
 						s2 = mCursor.getString(8);
+						Log.d("SUBM", "Notes"+s2);
 					} else {
 						s2 = "(NO NOTES ADDED)";
 					}

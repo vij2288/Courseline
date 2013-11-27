@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 
+import deccan.courseline.R;
+
 import entities.Course;
 import entities.SubType;
 import entities.Submission;
@@ -16,6 +18,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.EditText;
 
 public class DBUtil extends SQLiteOpenHelper {
 
@@ -140,6 +143,7 @@ public class DBUtil extends SQLiteOpenHelper {
 	public long insertSub(String userID, String cID, int subID, byte[] pic1,
 			byte[] pic2, byte[] pic3, byte[] pic4, byte[] pic5, String notes) {
 		SQLiteDatabase db = this.getWritableDatabase();
+		Log.d("DBUTIL", "Notes"+ notes);		
 		ContentValues values = new ContentValues();
 		values.put(subColumn1, userID);
 		values.put(subColumn2, cID);
@@ -214,7 +218,9 @@ public class DBUtil extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 		String sql = "SELECT * FROM " + subTable + " WHERE " + subColumn1
 				+ " =" + "'" + userID + "'" + " AND " + subColumn2 + " =" + "'"
-				+ cID + "'" + " AND " + subColumn3 + " =" + "'" + subID + "';";
+				+ cID + "'" + " AND " + subColumn3 + " =" + subID + ";";
+		//String[] columns ={subColumn1,subColumn2,subColumn3};
+		//String[] args ={userID,
 		return db.rawQuery(sql, null);
 	}
 
@@ -259,9 +265,10 @@ public class DBUtil extends SQLiteOpenHelper {
 	public void updateSub(String userID, String cID, int subID, byte[] pic1,
 			byte[] pic2, byte[] pic3, byte[] pic4, byte[] pic5, String notes) {
 		SQLiteDatabase db = this.getWritableDatabase();
-		String whereClause = subColumn1 + " =?" + " AND" + subColumn2 + " =?"
-				+ " AND" + subColumn3;
+		String whereClause = subColumn1 + " =?" + " AND " + subColumn2 + " =?"
+				+ " AND " + subColumn3 + " =?";
 		String[] whereArgs = { userID, cID, Integer.toString(subID) };
+		Log.d("DBUTIL", "update ->Notes "+ notes);		
 		ContentValues values = new ContentValues();
 		values.put(subColumn4, pic1);
 		values.put(subColumn5, pic2);
@@ -269,7 +276,8 @@ public class DBUtil extends SQLiteOpenHelper {
 		values.put(subColumn7, pic4);
 		values.put(subColumn8, pic5);
 		values.put(subColumn9, notes);
-		db.update(subTable, values, whereClause, whereArgs);
+		int count = db.update(subTable, values, whereClause, whereArgs);
+		Log.d("DBUTIL", "no of rows updated "+ count);
 	}
 
 }

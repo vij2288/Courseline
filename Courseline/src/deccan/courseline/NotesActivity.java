@@ -29,6 +29,8 @@ public class NotesActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.deccan_courseline_activity_notes);
+		
+		mdb=new DBUtil(this);
 
 		userID = getIntent().getStringExtra("userID");
 		Log.d("NOTES", "User ID: " + userID);
@@ -37,7 +39,12 @@ public class NotesActivity extends Activity {
 		subm = (Submission) getIntent().getSerializableExtra("subm");
 		Log.d("NOTES", "Sub ID: " + subm.getSubId());
 
-		final EditText edt = (EditText) findViewById(R.id.editNotes);
+		EditText edt = (EditText) findViewById(R.id.editNotes);
+		
+		mCursor = mdb.selectSub(userID, courseID, subm.getSubId());
+		Log.d("NOTES", "no of records "+mCursor.getCount());	
+		
+		
 
 		mCursor = mdb.selectSub(userID, courseID, subm.getSubId());
 		if (mCursor.getCount() > 0) {
@@ -50,15 +57,19 @@ public class NotesActivity extends Activity {
 		b1.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
+				EditText edt = (EditText) findViewById(R.id.editNotes);
 				String notes = edt.getText().toString();
+				Log.d("NOTES", notes);
 				mCursor = mdb.selectSub(userID, courseID, subm.getSubId());
 				if (mCursor.getCount() > 0) {
+					Log.d("NOTES", "Updating already existing sub ");
 					mCursor.moveToFirst();
 					mdb.updateSub(userID, courseID, subm.getSubId(),
 							mCursor.getBlob(3), mCursor.getBlob(4),
 							mCursor.getBlob(5), mCursor.getBlob(6),
 							mCursor.getBlob(7), notes);
 				} else {
+					Log.d("NOTES", "Inserting a new sub record ");
 					mdb.insertSub(userID, courseID, subm.getSubId(), null,
 							null, null, null, null, notes);
 				}
@@ -68,8 +79,11 @@ public class NotesActivity extends Activity {
 				toast.setGravity(Gravity.CENTER, 0, 0);
 				toast.show();
 			}
+			
 		});
-
+		mCursor = mdb.selectSub(userID, courseID, subm.getSubId());
+		Log.d("NOTES", "no of records "+mCursor.getCount());	
+		
 	}
 
 	@Override

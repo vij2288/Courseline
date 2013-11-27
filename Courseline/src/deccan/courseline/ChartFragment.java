@@ -135,6 +135,7 @@ public class ChartFragment extends Fragment {
 				i++;
 			}
 		}
+		Log.d("CHART", "map: " + courseMap.get(0) + ", " + courseMap.get(1));
 	
 		Log.d("CHART", "setting view window");
 		// Get today and set ranges starting from today
@@ -260,7 +261,8 @@ public class ChartFragment extends Fragment {
 	        				break;
 	        			}
 	        		}
-	        		String crsID = courseMap.get(curLoc.y);
+	        		String crsID = courseMap.get((int)curLoc.y);
+	        		Log.d("CHART", "Y: " + curLoc.y + " crsID:" + crsID);
 	        		
 	        		if (subm != null) {
 	        			chart2sub.putExtra("userID", userID);
