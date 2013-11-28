@@ -48,7 +48,8 @@ public class RegisterActivity extends Activity {
 					
 					Intent reg2home = new Intent(getBaseContext(),HomeActivity.class);
 					reg2home.putExtra("userID", email.getText().toString());
-					startActivity(reg2home);
+					startActivityForResult(reg2home, 500);
+					overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 				// if passwords mismatch
 				} else {
 					Toast toast = Toast.makeText(getBaseContext(),"Password mismatch! Retry.",Toast.LENGTH_LONG);
@@ -98,6 +99,11 @@ public class RegisterActivity extends Activity {
 		super.onDestroy();
 
 	}
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

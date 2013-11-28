@@ -133,14 +133,14 @@ public class ChartFragment extends Fragment {
 											+ ", " + i + ") = "
 											+ sub.getWeightPercent());
 							// add value & annotation for each submission
-							values.add(day_yr, i, sub.getWeightPercent());
+							values.add(day_yr, 10*i, sub.getWeightPercent()*3);
 							String annot = sub.getSubName()
 									+ "\n"
 									+ new SimpleDateFormat("MMM").format(c
 											.getTime()) + " "
 									+ c.get(Calendar.DATE);
-							values.addAnnotation(annot, (day_yr + 0.25),
-									(i - 0.25));
+							values.addAnnotation(annot, day_yr,
+									(10*i - 2));
 						}
 					}
 					// add renderer
@@ -184,8 +184,8 @@ public class ChartFragment extends Fragment {
 		// render.setPanLimits(new double[] { 1, 500, -10, 10 });
 		// render.setZoomLimits(new double[] { 1, 500, -10, 10 });
 
-		// render.setShowGrid(true);
-		// render.setGridColor(Color.GRAY);
+		 render.setShowGrid(true);
+		 render.setGridColor(Color.GRAY);
 
 		render.setAxisTitleTextSize(16);
 		render.setChartTitleTextSize(20);

@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.app.Activity;
 import android.app.ActionBar.LayoutParams;
+import android.content.Intent;
 import android.database.Cursor;
 import android.util.Log;
 import android.view.Gravity;
@@ -425,9 +426,14 @@ public class AdditionActivity extends Activity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-
+		
 	}
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+    
 	@Override
 	protected void onPause() {
 		super.onPause();

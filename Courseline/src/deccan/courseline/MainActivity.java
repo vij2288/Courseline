@@ -58,7 +58,8 @@ public class MainActivity extends Activity {
 						
 						Intent main2home = new Intent(getBaseContext(), HomeActivity.class);
 						main2home.putExtra("userID", userID);
-						startActivity(main2home);						
+						startActivityForResult(main2home, 500);
+						overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 					} else {
 						email.setText("");
 						pwd.setText("");
@@ -78,7 +79,8 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				Intent main2reg = new Intent(getBaseContext(), RegisterActivity.class);
-				startActivity(main2reg);	
+				startActivityForResult(main2reg, 500);
+				overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 			}
 		});
 
@@ -170,6 +172,12 @@ public class MainActivity extends Activity {
 
 	}
 */
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

@@ -127,7 +127,9 @@ public class SubmissionActivity extends Activity {
 					i.putExtra("userID",userID);
 					i.putExtra("courseID",courseID);
 					i.putExtra("subm", subm);
-					startActivity(i);
+					startActivityForResult(i, 500);
+					overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
 				}
 			});
 
@@ -164,6 +166,11 @@ public class SubmissionActivity extends Activity {
 		super.onDestroy();
 
 	}
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

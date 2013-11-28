@@ -5,7 +5,6 @@ import java.util.Iterator;
 
 import local.DBUtil;
 import entities.Course;
-import entities.Student;
 import entities.SubType;
 import entities.Submission;
 import android.app.ActionBar.LayoutParams;
@@ -36,6 +35,8 @@ public class HomeActivity extends FragmentActivity {
 	public String userID = null;
 	DBUtil mdb;
 	Cursor mCursor;
+	int[] color = new int[] { 0xffff0000, 0xffff007f, 0xff0000ff, 0xff006633,
+			0xff660066 };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +70,8 @@ public class HomeActivity extends FragmentActivity {
 				Intent home2add = new Intent(getBaseContext(),
 						AdditionActivity.class);
 				home2add.putExtra("userID", userID);
-				startActivity(home2add);
+				startActivityForResult(home2add, 500);
+				overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 			}
 		});
 
@@ -79,7 +81,8 @@ public class HomeActivity extends FragmentActivity {
 				Intent home2delete = new Intent(getBaseContext(),
 						DeletionActivity.class);
 				home2delete.putExtra("userID", userID);
-				startActivity(home2delete);
+				startActivityForResult(home2delete, 500);
+				overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 			}
 		});
 
@@ -123,6 +126,7 @@ public class HomeActivity extends FragmentActivity {
 				TextView t1 = new TextView(this);
 				t1.setText(c_id);
 				t1.setTextSize(25);
+				t1.setTextColor(color[i]);
 				row1.addView(t1);
 				CheckBox c1 = new CheckBox(this);
 				c1.setChecked(true);
@@ -210,13 +214,18 @@ public class HomeActivity extends FragmentActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-
+		
 	}
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+    
 	@Override
 	protected void onPause() {
 		super.onPause();
-
+		
 	}
 
 	@Override
