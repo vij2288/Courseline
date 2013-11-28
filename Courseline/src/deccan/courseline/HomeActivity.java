@@ -175,6 +175,18 @@ public class HomeActivity extends FragmentActivity {
 
 			row1.addView(c1);
 
+			final int subtype_num = i;
+			// Install CheckBox listener
+			c1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView,
+						boolean isChecked) {
+					fragment.subs[subtype_num] = isChecked;
+					fragment.drawChart();
+				}
+			});
+
+			
 			if (i % 2 == 1) {
 				submissions.addView(row1, new TableLayout.LayoutParams(
 						LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));

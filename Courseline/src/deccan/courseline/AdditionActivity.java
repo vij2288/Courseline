@@ -407,7 +407,7 @@ public class AdditionActivity extends Activity {
 				}
 			}
 		});
-		// mdb.close();
+
 	}
 
 	@Override
@@ -443,7 +443,7 @@ public class AdditionActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-
+		mdb.close();
 	}
 
 	@Override
