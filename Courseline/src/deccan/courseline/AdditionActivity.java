@@ -43,6 +43,7 @@ public class AdditionActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.deccan_courseline_activity_addition);
 		userID = getIntent().getStringExtra("userID");
+		Log.d("ADDITION", "User id with the intent is "+userID);
 
 		mdb = new DBUtil(this);
 
@@ -57,9 +58,9 @@ public class AdditionActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				Log.d("ADDITION", "Inside on click of search");
-				Course course=null;
+				Course course = null;
 				course = mdb.selectCourse(searchText.getText().toString());
-				if (course!=null) {
+				if (course != null) {
 					Log.d("ADDITION", "found course locally");
 					TableLayout results = (TableLayout) findViewById(R.id.resultsTable);
 					results.removeAllViews();
@@ -90,8 +91,10 @@ public class AdditionActivity extends Activity {
 									int colIndex = 2;
 									boolean found = false;
 									while (courseCount > 0) {
-										if (mCursor.getString(colIndex).equalsIgnoreCase(searchText
-												.getText().toString())) {
+										if (mCursor.getString(colIndex)
+												.equalsIgnoreCase(
+														searchText.getText()
+																.toString())) {
 											found = true;
 											// toast present
 											Toast toast = Toast.makeText(
@@ -110,20 +113,23 @@ public class AdditionActivity extends Activity {
 									if (found == false) {
 										switch (courseCount) {
 										case 0:
-											Log.d("ADDITION", "1st subject updated Locallly");
+											Log.d("ADDITION",
+													"1st subject updated Locallly");
 											mdb.updateUser(userID, searchText
 													.getText().toString(),
 													null, null, null, null, 1);
 											break;
 										case 1:
-											Log.d("ADDITION", "2nd subject updated Locallly");
+											Log.d("ADDITION",
+													"2nd subject updated Locallly");
 											mdb.updateUser(userID, mCursor
 													.getString(2), searchText
 													.getText().toString(),
 													null, null, null, 2);
 											break;
 										case 2:
-											Log.d("ADDITION", "3rd subject updated Locallly");
+											Log.d("ADDITION",
+													"3rd subject updated Locallly");
 											mdb.updateUser(userID, mCursor
 													.getString(2), mCursor
 													.getString(3), searchText
@@ -131,7 +137,8 @@ public class AdditionActivity extends Activity {
 													null, null, 3);
 											break;
 										case 3:
-											Log.d("ADDITION", "4th subject updated Locallly");
+											Log.d("ADDITION",
+													"4th subject updated Locallly");
 											mdb.updateUser(userID, mCursor
 													.getString(2), mCursor
 													.getString(3), mCursor
@@ -140,7 +147,8 @@ public class AdditionActivity extends Activity {
 													null, 4);
 											break;
 										case 4:
-											Log.d("ADDITION", "5th subject updated Locallly");
+											Log.d("ADDITION",
+													"5th subject updated Locallly");
 											mdb.updateUser(userID, mCursor
 													.getString(2), mCursor
 													.getString(3), mCursor
@@ -157,23 +165,27 @@ public class AdditionActivity extends Activity {
 										toast.setGravity(Gravity.CENTER, 0, 0);
 										toast.show();
 										// intent???
-										Course c1 =mdb.selectCourse(searchText.getText().toString());
-										Log.d("ADDITION", "Course: " + c1.toString());
-										
-										mCursor=mdb.selectUser(userID);
-										if(mCursor.getCount()>0){
+										Course c1 = mdb.selectCourse(searchText
+												.getText().toString());
+										Log.d("ADDITION",
+												"Course: " + c1.toString());
+
+										mCursor = mdb.selectUser(userID);
+										if (mCursor.getCount() > 0) {
 											mCursor.moveToFirst();
 											String str = new String();
-											for (int i=0; i<=8; i++) {
+											for (int i = 0; i <= 8; i++) {
 												if (mCursor.getString(i) != null) {
-													str += mCursor.getString(i) + ", ";
+													str += mCursor.getString(i)
+															+ ", ";
 												} else {
 													str += "null, ";
 												}
 											}
-											Log.d("ADDITION", "userTable: " + str);
+											Log.d("ADDITION", "userTable: "
+													+ str);
 										}
-										
+
 									}
 
 								} else {
@@ -197,164 +209,207 @@ public class AdditionActivity extends Activity {
 						String s = it.next();
 						if (s.equalsIgnoreCase(searchText.getText().toString())) {
 
-						Log.d("ADDITION", "contacting server");
-						TableRow row1 = new TableRow(getBaseContext());
-						TextView t1 = new TextView(getBaseContext());
-						t1.setText(s);
-						t1.setTextSize(25);
-						row1.addView(t1);
-						Button b1 = new Button(getBaseContext());
-						b1.setText("Add Course");
-						row1.addView(b1);
-						results.addView(row1, new TableLayout.LayoutParams(
-								LayoutParams.FILL_PARENT,
-								LayoutParams.WRAP_CONTENT));
+							Log.d("ADDITION", "contacting server");
+							TableRow row1 = new TableRow(getBaseContext());
+							TextView t1 = new TextView(getBaseContext());
+							t1.setText(s);
+							t1.setTextSize(25);
+							row1.addView(t1);
+							Button b1 = new Button(getBaseContext());
+							b1.setText("Add Course");
+							row1.addView(b1);
+							results.addView(row1, new TableLayout.LayoutParams(
+									LayoutParams.FILL_PARENT,
+									LayoutParams.WRAP_CONTENT));
 
-						b1.setOnClickListener(new OnClickListener() {
-							@Override
-							public void onClick(View arg0) {
-								if (courses.contains(searchText.getText()
-										.toString())) {
-									Student student = new Student();
-									String filename = Environment
-											.getExternalStorageDirectory()
-											.getPath()
-											+ "/Download/cmu_f13_"
-											+ searchText.getText().toString()
-											+ ".xml";
-									System.out.println("Static file path: "
-											+ filename);
-									LocalUtil.ImportCourseData(student,
-											filename);
-									if (student != null) {
-										Course course = student.courses.get(0);
-										// add to courses table
-										mdb.insertCourse(course);
-										Log.d("ADDITION", "insert done");
-										// add to users table
-										mCursor = mdb.selectUser(userID);
-										if (mCursor.getCount() > 0) {
+							b1.setOnClickListener(new OnClickListener() {
+								@Override
+								public void onClick(View arg0) {
+									if (courses.contains(searchText.getText()
+											.toString())) {
+										Student student = new Student();
+										String filename = Environment
+												.getExternalStorageDirectory()
+												.getPath()
+												+ "/Download/cmu_f13_"
+												+ searchText.getText()
+														.toString() + ".xml";
+										System.out.println("Static file path: "
+												+ filename);
+										LocalUtil.ImportCourseData(student,
+												filename);
+										if (student != null) {
+											Course course = student.courses
+													.get(0);
+											// add to courses table
+											mdb.insertCourse(course);
+											Log.d("ADDITION", "insert done");
 											Log.d("ADDITION",
-													"inside adding the course to user");
-											mCursor.moveToFirst();
-											if (mCursor.getInt(8) < 5) {
-												int courseCount = mCursor
-														.getInt(8);
-												switch (courseCount) {
-												case 0:
-													Log.d("ADDITION", "1st subject updated globally");
-													mdb.updateUser(
-															userID,
-															searchText
-																	.getText()
-																	.toString(),
-															null, null, null,
-															null, 1);
-													break;
-												case 1:
-													Log.d("ADDITION", "2nd subject updated globally");
-													mdb.updateUser(
-															userID,
-															mCursor.getString(2),
-															searchText
-																	.getText()
-																	.toString(),
-															null, null, null, 2);
-													break;
-												case 2:
-													Log.d("ADDITION", "3rd subject updated globally");
-													mdb.updateUser(
-															userID,
-															mCursor.getString(2),
-															mCursor.getString(3),
-															searchText
-																	.getText()
-																	.toString(),
-															null, null, 3);
-													break;
-												case 3:
-													Log.d("ADDITION", "4th subject updated globally");
-													mdb.updateUser(
-															userID,
-															mCursor.getString(2),
-															mCursor.getString(3),
-															mCursor.getString(4),
-															searchText
-																	.getText()
-																	.toString(),
-															null, 4);
-													break;
-												case 4:
-													Log.d("ADDITION", "5th subject updated globally");
-													mdb.updateUser(
-															userID,
-															mCursor.getString(2),
-															mCursor.getString(3),
-															mCursor.getString(4),
-															mCursor.getString(5),
-															searchText
-																	.getText()
-																	.toString(),
-															5);
-													break;
-
-												}
-												Toast toast = Toast.makeText(
-														getBaseContext(),
-														"Course added",
-														Toast.LENGTH_LONG);
-												toast.setGravity(
-														Gravity.CENTER, 0, 0);
-												toast.show();
-												// intent???
-												Course c1 =mdb.selectCourse(searchText.getText().toString());
-												Log.d("ADDITION", "Course: " + c1.toString());
-												
-												mCursor=mdb.selectUser(userID);
-												if(mCursor.getCount()>0){
-													mCursor.moveToFirst();
-													String str = new String();
-													for (int i=0; i<=8; i++) {
-														if (mCursor.getString(i) != null) {
-															str += mCursor.getString(i) + ", ";
-														} else {
-															str += "null, ";
-														}
+													"Course: before db select "
+															+ course.toString());
+											// add to users table
+											mCursor = mdb.selectUser(userID);
+											if (mCursor.getCount() > 0) {
+												mCursor.moveToFirst();
+												String str = new String();
+												for (int i = 0; i <= 8; i++) {
+													if (mCursor.getString(i) != null) {
+														str += mCursor
+																.getString(i)
+																+ ", ";
+													} else {
+														str += "null, ";
 													}
-													Log.d("ADDITION", "userTable: " + str);
 												}
-												
+												Log.d("ADDITION", "userTable: "
+														+ str);
 											} else {
-												// toast exceeded
-												Toast toast = Toast
-														.makeText(
-																getBaseContext(),
-																"You already have 5 Courses",
-																Toast.LENGTH_LONG);
-												toast.setGravity(
-														Gravity.CENTER, 0, 0);
-												toast.show();
+												Log.d("ADDITION",
+														"mDB selectuser didn't return anything");
+											}
+
+											if (mCursor.getCount() > 0) {
+												Log.d("ADDITION",
+														"inside adding the course to user");
+												mCursor.moveToFirst();
+												if (mCursor.getInt(8) < 5) {
+													int courseCount = mCursor
+															.getInt(8);
+													switch (courseCount) {
+													case 0:
+														Log.d("ADDITION",
+																"1st subject updated globally");
+														mdb.updateUser(
+																userID,
+																searchText
+																		.getText()
+																		.toString(),
+																null, null,
+																null, null, 1);
+														break;
+													case 1:
+														Log.d("ADDITION",
+																"2nd subject updated globally");
+														mdb.updateUser(
+																userID,
+																mCursor.getString(2),
+																searchText
+																		.getText()
+																		.toString(),
+																null, null,
+																null, 2);
+														break;
+													case 2:
+														Log.d("ADDITION",
+																"3rd subject updated globally");
+														mdb.updateUser(
+																userID,
+																mCursor.getString(2),
+																mCursor.getString(3),
+																searchText
+																		.getText()
+																		.toString(),
+																null, null, 3);
+														break;
+													case 3:
+														Log.d("ADDITION",
+																"4th subject updated globally");
+														mdb.updateUser(
+																userID,
+																mCursor.getString(2),
+																mCursor.getString(3),
+																mCursor.getString(4),
+																searchText
+																		.getText()
+																		.toString(),
+																null, 4);
+														break;
+													case 4:
+														Log.d("ADDITION",
+																"5th subject updated globally");
+														mdb.updateUser(
+																userID,
+																mCursor.getString(2),
+																mCursor.getString(3),
+																mCursor.getString(4),
+																mCursor.getString(5),
+																searchText
+																		.getText()
+																		.toString(),
+																5);
+														break;
+
+													}
+													Toast toast = Toast
+															.makeText(
+																	getBaseContext(),
+																	"Course added",
+																	Toast.LENGTH_LONG);
+													toast.setGravity(
+															Gravity.CENTER, 0,
+															0);
+													toast.show();
+													// intent???
+													Course c1 = mdb
+															.selectCourse(searchText
+																	.getText()
+																	.toString());
+													Log.d("ADDITION",
+															"Course: "
+																	+ c1.toString());
+
+													mCursor = mdb
+															.selectUser(userID);
+													if (mCursor.getCount() > 0) {
+														mCursor.moveToFirst();
+														String str = new String();
+														for (int i = 0; i <= 8; i++) {
+															if (mCursor
+																	.getString(i) != null) {
+																str += mCursor
+																		.getString(i)
+																		+ ", ";
+															} else {
+																str += "null, ";
+															}
+														}
+														Log.d("ADDITION",
+																"userTable: "
+																		+ str);
+													}
+
+												} else {
+													// toast exceeded
+													Toast toast = Toast
+															.makeText(
+																	getBaseContext(),
+																	"You already have 5 Courses",
+																	Toast.LENGTH_LONG);
+													toast.setGravity(
+															Gravity.CENTER, 0,
+															0);
+													toast.show();
+												}
 											}
 										}
+									} else {
+										Toast toast = Toast.makeText(
+												getBaseContext(),
+												"Course not found.",
+												Toast.LENGTH_LONG);
+										toast.setGravity(Gravity.CENTER, 0, 0);
+										toast.show();
 									}
-								} else {
-									Toast toast = Toast.makeText(
-											getBaseContext(),
-											"Course not found.",
-											Toast.LENGTH_LONG);
-									toast.setGravity(Gravity.CENTER, 0, 0);
-									toast.show();
 								}
-							}
-						});
+							});
+						}
 					}
-				}
 				}
 			}
 		});
-		mdb.close();
+		// mdb.close();
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -364,7 +419,7 @@ public class AdditionActivity extends Activity {
 	@Override
 	protected void onRestart() {
 		super.onRestart();
-		
+
 	}
 
 	@Override
@@ -372,19 +427,19 @@ public class AdditionActivity extends Activity {
 		super.onStart();
 
 	}
-	
+
 	@Override
 	protected void onPause() {
 		super.onPause();
 
 	}
-	
+
 	@Override
 	protected void onStop() {
 		super.onStop();
-		
+
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();

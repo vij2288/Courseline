@@ -46,14 +46,15 @@ public class RegisterActivity extends Activity {
 					toast.setGravity(Gravity.CENTER, 0, 0);
 					toast.show();
 					
-					fname.setText("");
-					email.setText("");
-					pwd.setText("");
-					repwd.setText("");
+					
 					
 					Intent reg2home = new Intent(getBaseContext(),HomeActivity.class);
 					reg2home.putExtra("userID", email.getText().toString());
 					startActivity(reg2home);
+					fname.setText("");
+					email.setText("");
+					pwd.setText("");
+					repwd.setText("");
 				// if passwords mismatch
 				} else {
 					fname.setText("");
