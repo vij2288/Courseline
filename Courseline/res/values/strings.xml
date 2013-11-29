@@ -35,7 +35,8 @@
     <string name="sub_head"></string>
     <string name="notes_head"></string>
     <string name="edit_notes">Edit Notes</string>
-    
-    
+    <string name="img">Note</string>
+    <string name="title_activity_image">ImageActivity</string>
+    <string name="delete_button">Delete Image</string>
 
 </resources>

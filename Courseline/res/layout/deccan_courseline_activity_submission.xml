@@ -33,11 +33,16 @@
           android:id="@+id/subTable"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_alignLeft="@+id/sub_head"
           android:layout_below="@+id/sub_head"
-          android:paddingLeft="100dp"
-          android:layout_marginTop="86dp" >
-
+          android:paddingLeft="10dp"
+          android:layout_marginTop="50dp" >
       </TableLayout>
+      
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:cacheColorHint="#00000000" >
+    </ListView>
 
 </RelativeLayout>

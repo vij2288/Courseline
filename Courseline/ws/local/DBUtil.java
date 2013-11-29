@@ -105,8 +105,8 @@ public class DBUtil extends SQLiteOpenHelper {
 	public long insertUser(String name, String userID, String pwd) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
-		Log.d("DBUTIL", "Creating a new user with "+name+" "+userID);
-		values.put(userColumn1, name); 
+		Log.d("DBUTIL", "Creating a new user with " + name + " " + userID);
+		values.put(userColumn1, name);
 		values.put(userColumn2, userID);
 		values.put(userColumn8, pwd);
 		values.put(userColumn9, 0);
@@ -117,7 +117,7 @@ public class DBUtil extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		Iterator<Submission> it = c.submissions.iterator();
-		Log.d("DBUTIL", "Creating a new course "+c.toString());
+		Log.d("DBUTIL", "Creating a new course " + c.toString());
 		long ret;
 		while (it.hasNext()) {
 			Submission s = it.next();
@@ -146,7 +146,8 @@ public class DBUtil extends SQLiteOpenHelper {
 	public long insertSub(String userID, String cID, int subID, byte[] pic1,
 			byte[] pic2, byte[] pic3, byte[] pic4, byte[] pic5, String notes) {
 		SQLiteDatabase db = this.getWritableDatabase();
-		Log.d("DBUTIL", "Creating a new Submission for user"+userID+" for course "+cID+" submission id "+subID);
+		Log.d("DBUTIL", "Creating a new Submission for user" + userID
+				+ " for course " + cID + " submission id " + subID);
 		Log.d("DBUTIL", "Notes" + notes);
 		ContentValues values = new ContentValues();
 		values.put(subColumn1, userID);
@@ -162,7 +163,7 @@ public class DBUtil extends SQLiteOpenHelper {
 	}
 
 	public Cursor selectUser(String userID) {
-		Log.d("DBUTIL", "selecting the user row with id "+userID);
+		Log.d("DBUTIL", "selecting the user row with id " + userID);
 		SQLiteDatabase db = this.getReadableDatabase();
 		String sql = "SELECT * FROM " + userTable + " WHERE " + userColumn2
 				+ " =" + "'" + userID + "';";
@@ -172,7 +173,7 @@ public class DBUtil extends SQLiteOpenHelper {
 	public Course selectCourse(String cID) {
 		SQLiteDatabase db = this.getReadableDatabase();
 		Course course = null;
-		Log.d("DBUTIL", "selecting the course row with id "+cID);
+		Log.d("DBUTIL", "selecting the course row with id " + cID);
 		Cursor mCursor;
 		String sql = "SELECT * FROM " + courseTable + " WHERE " + courseColumn2
 				+ " =" + "'" + cID + "';";
@@ -220,7 +221,8 @@ public class DBUtil extends SQLiteOpenHelper {
 
 	public Cursor selectSub(String userID, String cID, int subID) {
 		SQLiteDatabase db = this.getReadableDatabase();
-		Log.d("DBUTIL", "selecting the submission row with id "+subID+" for user"+userID+" for the course "+cID);
+		Log.d("DBUTIL", "selecting the submission row with id " + subID
+				+ " for user" + userID + " for the course " + cID);
 		String sql = "SELECT * FROM " + subTable + " WHERE " + subColumn1
 				+ " =" + "'" + userID + "'" + " AND " + subColumn2 + " =" + "'"
 				+ cID + "'" + " AND " + subColumn3 + " =" + subID + ";";
@@ -230,7 +232,7 @@ public class DBUtil extends SQLiteOpenHelper {
 	}
 
 	public void deleteUser(String userID) {
-		Log.d("DBUTIL", "Deleting the user with id "+userID);
+		Log.d("DBUTIL", "Deleting the user with id " + userID);
 		SQLiteDatabase db = this.getWritableDatabase();
 		String whereClause = userColumn2 + " = ?";
 		String[] whereArgs = { userID };
@@ -238,7 +240,7 @@ public class DBUtil extends SQLiteOpenHelper {
 	}
 
 	public void deleteCourse(String cID) {
-		Log.d("DBUTIL", "Deleting the course with id "+cID);
+		Log.d("DBUTIL", "Deleting the course with id " + cID);
 		SQLiteDatabase db = this.getWritableDatabase();
 		String whereClause = courseColumn2 + " =?";
 		String[] whereArgs = { cID };
@@ -246,7 +248,8 @@ public class DBUtil extends SQLiteOpenHelper {
 	}
 
 	public void deleteSub(String userID, String cID, int subID) {
-		Log.d("DBUTIL", "Deleting the submission with id "+subID+" for the user "+userID+ " of the course "+cID);
+		Log.d("DBUTIL", "Deleting the submission with id " + subID
+				+ " for the user " + userID + " of the course " + cID);
 		SQLiteDatabase db = this.getWritableDatabase();
 		String whereClause = subColumn1 + " =?" + " AND " + subColumn2 + " =?"
 				+ " AND " + subColumn3 + " =?";
@@ -256,7 +259,7 @@ public class DBUtil extends SQLiteOpenHelper {
 
 	public void updateUser(String userID, String c1, String c2, String c3,
 			String c4, String c5, int count) {
-		Log.d("DBUTIL", "Updating the user with id "+userID);
+		Log.d("DBUTIL", "Updating the user with id " + userID);
 		SQLiteDatabase db = this.getWritableDatabase();
 		String whereClause = userColumn2 + " =?";
 		String[] whereArgs = { userID };
@@ -274,31 +277,37 @@ public class DBUtil extends SQLiteOpenHelper {
 			byte[] pic2, byte[] pic3, byte[] pic4, byte[] pic5, String notes) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor mCursor;
-		Log.d("DBUTIL", "Updating the submission with id "+ subID+" for the user "+userID+ " of the course "+cID);
+		Log.d("DBUTIL", "Updating the submission with id " + subID
+				+ " for the user " + userID + " of the course " + cID);
 
-		String sql = "UPDATE " + subTable + " SET " + subColumn4 + "=" + pic1
-				+ ", " + subColumn5 + "=" + pic2 + ", " + subColumn6 + "="
-				+ pic3 + ", " + subColumn7 + "=" + pic4 + ", " + subColumn8
-				+ "=" + pic5 + ", " + subColumn9 + "='" + notes + "'" + " WHERE "
-				+ subColumn1 + "='" + userID + "' AND " + subColumn2 + "='"
-				+ cID+ "' AND " +subColumn3+"="+subID+";";
-		Log.d("DBUTIL","Update Query "+sql);
 		/*
-		 * String whereClause = subColumn1 + " =?" + " AND " + subColumn2 +
-		 * " =?" + " AND " + subColumn3 + " =?"; String[] whereArgs = { userID,
-		 * cID, Integer.toString(subID) }; Log.d("DBUTIL", "update ->Notes "+
-		 * notes); ContentValues values = new ContentValues();
-		 * values.put(subColumn4, pic1); values.put(subColumn5, pic2);
-		 * values.put(subColumn6, pic3); values.put(subColumn7, pic4);
-		 * values.put(subColumn8, pic5); values.put(subColumn9, notes); int
-		 * count = db.update(subTable, values, whereClause, whereArgs);
+		 * String sql = "UPDATE " + subTable + " SET " + subColumn4 + "='" +
+		 * pic1 + "', " + subColumn5 + "='" + pic2 + "', " + subColumn6 + "'=" +
+		 * pic3 + "', " + subColumn7 + "='" + pic4 + "', " + subColumn8 + "='" +
+		 * pic5 + "', " + subColumn9 + "='" + notes + "'" + " WHERE " +
+		 * subColumn1 + "='" + userID + "' AND " + subColumn2 + "='" + cID+
+		 * "' AND " +subColumn3+"="+subID+";";
 		 */
-		mCursor=db.rawQuery(sql, null);
-		if(mCursor.getCount()>0){
-			Log.d("DBUTIL", "Table updated with count "+ mCursor.getCount() );
-		}
-		else
-			Log.d("DBUTIL", "no update happened "+ mCursor.getCount() );	
+		// Log.d("DBUTIL","Update Query "+sql);
+
+		String whereClause = subColumn1 + "='"+userID+"'" + " AND " + subColumn2 + "='"+cID+"'"
+				+ " AND " + subColumn3 + " ="+subID;
+		
+		Log.d("DBUTIL", "update ->Notes " + notes);
+		ContentValues values = new ContentValues();
+		values.put(subColumn4, pic1);
+		values.put(subColumn5, pic2);
+		values.put(subColumn6, pic3);
+		values.put(subColumn7, pic4);
+		values.put(subColumn8, pic5);
+		values.put(subColumn9, notes);
+		int count = db.update(subTable, values, whereClause, null);
+		Log.d("DBUTIL", "update count " + count);
+		/*
+		 * mCursor=db.rawQuery(sql, null); if(mCursor.getCount()>0){
+		 * Log.d("DBUTIL", "Table updated with count "+ mCursor.getCount() ); }
+		 * else Log.d("DBUTIL", "no update happened "+ mCursor.getCount() );
+		 */
 	}
 
 }
