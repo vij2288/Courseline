@@ -2,42 +2,63 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    tools:context=".HomeActivity"
+    android:background="@color/white"
     android:configChanges="orientation"
-    android:screenOrientation="portrait" >
+    android:screenOrientation="portrait"
+    tools:context=".HomeActivity" >
 
-    <Button
-        android:id="@+id/delete"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/add"
-        android:text="@string/delete_c" />
+    <TableLayout
+        android:id="@+id/add_del_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
-    <Button
-        android:id="@+id/add"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingTop="10dp"
-        android:text="@string/add_c" />
+        <TableRow
+            android:id="@+id/buttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:weightSum="2" >
+
+            <Button
+                android:id="@+id/add"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/blue_menu_btn"
+                android:padding="6dp"
+                android:text="@string/add_c"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/delete"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/red_menu_btn"
+                android:padding="6dp"
+                android:text="@string/delete_c"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+        </TableRow>
+    </TableLayout>
 
     <TableLayout
         android:id="@+id/tableFilters"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:paddingBottom="500dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="60dp" >
+        android:layout_below="@+id/add_del_buttons">
 
         <TableRow
             android:id="@+id/rowName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
         </TableRow>
-        
+
         <TableRow
             android:id="@+id/rowFilters"
             android:layout_width="wrap_content"
@@ -56,19 +77,20 @@
             </TableLayout>
         </TableRow>
     </TableLayout>
- 
+
     <LinearLayout
         android:id="@+id/chartView"
-        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_margin="0dp"
+        android:orientation="vertical"
         android:paddingBottom="0dp"
         android:paddingLeft="0dp"
         android:paddingRight="0dp"
         android:paddingTop="350dp" >
+
     </LinearLayout>
 
 </RelativeLayout>

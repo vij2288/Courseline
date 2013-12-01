@@ -9,34 +9,24 @@
     tools:context=".DeletionActivity"
     android:configChanges="orientation"
     android:screenOrientation="portrait" >
-    
-      <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:contentDescription="@string/logo_desc"
-        android:src="@drawable/courseline_logo" />
+
 
       <TextView
           android:id="@+id/delete_Text"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_alignLeft="@+id/imageView1"
-          android:layout_below="@+id/imageView1"
           android:layout_marginTop="40dp"
           android:text="@string/delete_head"
-          android:textAppearance="?android:attr/textAppearanceMedium" />
+          android:textStyle="bold"
+          android:textAppearance="?android:attr/textAppearanceLarge" />
 
       <TableLayout
           android:id="@+id/deleteTable"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
           android:layout_alignLeft="@+id/delete_Text"
           android:layout_below="@+id/delete_Text"
-          android:paddingLeft="100dp"
-          android:layout_marginTop="86dp" >
+          android:paddingTop="40dp" >
 
       </TableLayout>
 

@@ -1,10 +1,8 @@
 package deccan.courseline;
 
 import local.DBUtil;
-import local.LocalUtil;
 import entities.Student;
 import android.os.Bundle;
-import android.os.Environment;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -15,7 +13,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TableRow;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
@@ -29,6 +26,8 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setTitle("Sign In");
+		getActionBar().setIcon(R.drawable.tbar_icon);
 		setContentView(R.layout.deccan_courseline_activity_main);
 		
 		mdb=new DBUtil(this);

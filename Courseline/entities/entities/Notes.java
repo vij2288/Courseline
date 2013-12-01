@@ -2,8 +2,8 @@ package entities;
 
 public class Notes {
 	
-	String name;
-	byte[] image;
+	public String name;
+	public byte[] image;
 	
 	public Notes(){
 		

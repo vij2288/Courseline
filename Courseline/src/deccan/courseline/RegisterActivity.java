@@ -26,6 +26,8 @@ public class RegisterActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setTitle("New User Registration");
+		getActionBar().setIcon(R.drawable.tbar_icon);
 		setContentView(R.layout.deccan_courseline_activity_register);
 		mdb=new DBUtil(this);
 		

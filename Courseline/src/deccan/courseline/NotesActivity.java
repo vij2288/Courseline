@@ -5,7 +5,10 @@ import entities.Course;
 import entities.Submission;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.ActionBar.LayoutParams;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -13,6 +16,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.Toast;
 
 public class NotesActivity extends Activity {
@@ -28,6 +33,8 @@ public class NotesActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setTitle("Update Note");
+		getActionBar().setIcon(R.drawable.tbar_icon);
 		setContentView(R.layout.deccan_courseline_activity_notes);
 		
 		mdb=new DBUtil(this);
@@ -53,7 +60,17 @@ public class NotesActivity extends Activity {
 		}
 
 		b1 = (Button) findViewById(R.id.Editbutton);
-
+		//TableRow.LayoutParams params = new TableRow.LayoutParams();
+		//params = new TableRow.LayoutParams();
+		//params.weight = 0.5f;
+		//b1.setLayoutParams(params);
+        b1.setTextSize(25);
+        //b1.setWidth(0);
+        b1.setTypeface(null, Typeface.BOLD);
+        b1.setTextColor(Color.WHITE);
+        b1.setBackground(getResources().getDrawable((R.drawable.blue_menu_btn)));
+		//b1.setText("Update Note");
+		
 		b1.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {

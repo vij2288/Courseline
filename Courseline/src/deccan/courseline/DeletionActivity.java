@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.app.ActionBar.LayoutParams;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -23,6 +25,8 @@ public class DeletionActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setTitle("Delete Course");
+		getActionBar().setIcon(R.drawable.tbar_icon);
 		setContentView(R.layout.deccan_courseline_activity_deletion);
 
 		userID = getIntent().getStringExtra("userID");
@@ -97,17 +101,25 @@ public class DeletionActivity extends Activity {
 					final int index = i;
 					TableRow row1 = new TableRow(getBaseContext());
 					TextView t1 = new TextView(getBaseContext());
+					TableRow.LayoutParams params = new TableRow.LayoutParams();
+					params.weight = 0.6f;
+					t1.setLayoutParams(params);
 					t1.setText(c[i]);
 					t1.setTextSize(25);
+					t1.setTextColor(Color.BLACK);
 					row1.addView(t1);
 					Button b1 = new Button(getBaseContext());
+					b1.setTextSize(25);
+		            //b1.setWidth(0);
+		            b1.setTypeface(null, Typeface.BOLD);
+		            b1.setTextColor(Color.WHITE);
+		            b1.setBackground(getResources().getDrawable((R.drawable.red_menu_btn)));
 					b1.setText("Remove Course");
 					row1.addView(b1);
-					results.addView(row1,
-							new TableLayout.LayoutParams(
-									LayoutParams.FILL_PARENT,
-									LayoutParams.WRAP_CONTENT));
-
+					row1.setPadding(6, 6, 6, 6);
+					results.addView(row1, new TableLayout.LayoutParams(
+							LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+					
 					b1.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View arg0) {

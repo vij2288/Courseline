@@ -8,46 +8,37 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".NotesActivity" >
 
-    <ImageView
-        android:id="@+id/imageView1"
+    <TextView
+        android:id="@+id/notes_head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/courseline_logo"
-        android:contentDescription="@string/logo_desc" />
+        android:layout_marginTop="14dp"
+        android:text="@string/notes_head"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
         android:id="@+id/editNotes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="91dp"
+        android:layout_above="@+id/Editbutton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
         android:ems="10"
         android:inputType="textMultiLine" >
 
         <requestFocus />
     </EditText>
 
-    <TextView
-        android:id="@+id/notes_head"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="14dp"
-        android:text="@string/notes_head"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
     <Button
         android:id="@+id/Editbutton"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editNotes"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="97dp"
-        android:text="@string/edit_notes" />
+        android:layout_alignLeft="@+id/editNotes"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
+        android:text="@string/updateNote" />
 
 </RelativeLayout>

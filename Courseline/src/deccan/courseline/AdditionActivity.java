@@ -15,6 +15,8 @@ import android.app.Activity;
 import android.app.ActionBar.LayoutParams;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -34,7 +36,7 @@ public class AdditionActivity extends Activity {
 	DBUtil mdb;
 	Cursor mCursor;
 	EditText searchText;
-	ImageButton search;
+	Button search;
 	Button add;
 	String userID;
 
@@ -42,6 +44,8 @@ public class AdditionActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		Log.d("ADDITION", "Inside on create");
 		super.onCreate(savedInstanceState);
+		setTitle("Add Course");
+		getActionBar().setIcon(R.drawable.tbar_icon);
 		setContentView(R.layout.deccan_courseline_activity_addition);
 		userID = getIntent().getStringExtra("userID");
 		Log.d("ADDITION", "User id with the intent is "+userID);
@@ -51,9 +55,12 @@ public class AdditionActivity extends Activity {
 		courses.add("15213");
 		courses.add("18644");
 		courses.add("18641");
-
-		searchText = (EditText) findViewById(R.id.searchText);
-		search = (ImageButton) findViewById(R.id.searchButton);
+		
+		searchText = (EditText) findViewById(R.id.searchText);		
+		TableRow.LayoutParams par = new TableRow.LayoutParams();
+		par.weight = 0.6f;
+		searchText.setLayoutParams(par);
+		search = (Button) findViewById(R.id.searchButton);
 		// Search/Add Button click listeners
 		search.setOnClickListener(new OnClickListener() {
 			@Override
@@ -67,17 +74,25 @@ public class AdditionActivity extends Activity {
 					results.removeAllViews();
 					TableRow row1 = new TableRow(getBaseContext());
 					TextView t1 = new TextView(getBaseContext());
+					TableRow.LayoutParams params = new TableRow.LayoutParams();
+					params.weight = 0.6f;
+					t1.setLayoutParams(params);
 					t1.setText(course.getCourseNumber());
 					t1.setTextSize(25);
+					t1.setTextColor(Color.BLACK);
 					row1.addView(t1);
 					Button b1 = new Button(getBaseContext());
+					b1.setTextSize(25);
+		            //b1.setWidth(0);
+		            b1.setTypeface(null, Typeface.BOLD);
+		            b1.setTextColor(Color.WHITE);
+		            b1.setBackground(getResources().getDrawable((R.drawable.blue_menu_btn)));
 					b1.setText("Add Course");
 					row1.addView(b1);
-					results.addView(row1,
-							new TableLayout.LayoutParams(
-									LayoutParams.FILL_PARENT,
-									LayoutParams.WRAP_CONTENT));
-
+					row1.setPadding(0, 40, 0, 0);
+					results.addView(row1, new TableLayout.LayoutParams(
+							LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+					
 					b1.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View arg0) {
@@ -213,16 +228,25 @@ public class AdditionActivity extends Activity {
 							Log.d("ADDITION", "contacting server");
 							TableRow row1 = new TableRow(getBaseContext());
 							TextView t1 = new TextView(getBaseContext());
+							TableRow.LayoutParams params = new TableRow.LayoutParams();
+							params.weight = 0.6f;
+							t1.setLayoutParams(params);
 							t1.setText(s);
 							t1.setTextSize(25);
+							t1.setTextColor(Color.BLACK);
 							row1.addView(t1);
 							Button b1 = new Button(getBaseContext());
+							b1.setTextSize(25);
+				            //b1.setWidth(0);
+				            b1.setTypeface(null, Typeface.BOLD);
+				            b1.setTextColor(Color.WHITE);
+				            b1.setBackground(getResources().getDrawable((R.drawable.blue_menu_btn)));
 							b1.setText("Add Course");
 							row1.addView(b1);
+							row1.setPadding(0, 40, 0, 0);
 							results.addView(row1, new TableLayout.LayoutParams(
-									LayoutParams.FILL_PARENT,
-									LayoutParams.WRAP_CONTENT));
-
+									LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+							
 							b1.setOnClickListener(new OnClickListener() {
 								@Override
 								public void onClick(View arg0) {

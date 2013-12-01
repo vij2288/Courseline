@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,8 @@ public class NotesAdapter extends ArrayAdapter<Notes> {
 		this.layoutResourceId = layoutResourceId;
 		this.context = context;
 		this.data = data;
+		
+		//Log.d("NOTES_AD", "data: " + data.get(0).getName());		
 	}
 
 	@Override
@@ -35,7 +38,9 @@ public class NotesAdapter extends ArrayAdapter<Notes> {
 		View row = convertView;
 		ImageHolder holder = null;
 
+		Log.d("NOTES_AD", "in getView()");
 		if (row == null) {
+			Log.d("NOTES_AD", "Creating new Images list.");
 			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
 			row = inflater.inflate(layoutResourceId, parent, false);
 			holder = new ImageHolder();
@@ -44,10 +49,12 @@ public class NotesAdapter extends ArrayAdapter<Notes> {
 			row.setTag(holder);
 		} else {
 			holder = (ImageHolder) row.getTag();
+			Log.d("NOTES_AD", "Images list already exists.");
 		}
 		Notes note = data.get(position);
-		holder.txtTitle.setText(note.getName());
-		byte[] outImage = note.getImage();
+		holder.txtTitle.setText(note.name);
+				//note.getName());
+		byte[] outImage = note.image;
 		ByteArrayInputStream imageStream = new ByteArrayInputStream(outImage);
 		Bitmap theImage = BitmapFactory.decodeStream(imageStream);
 		holder.imgIcon.setImageBitmap(theImage);

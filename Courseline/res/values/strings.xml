@@ -8,7 +8,7 @@
     <string name="title_activity_search">SearchActivity</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
-    <string name="welcome">Welcome</string>
+    <string name="welcome">Manage coursework better!</string>
     <string name="email_address">Email Address</string>
     <string name="pwd">Password</string>
     <string name="logo_desc">This is our logo</string>
@@ -38,5 +38,8 @@
     <string name="img">Note</string>
     <string name="title_activity_image">ImageActivity</string>
     <string name="delete_button">Delete Image</string>
+    <string name="addNotes">Manage Notes</string>
+    <string name="addPics">Manage Pictures</string>
+    <string name="updateNote">Update Note</string>
 
 </resources>

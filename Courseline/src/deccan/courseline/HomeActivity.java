@@ -11,6 +11,7 @@ import android.app.ActionBar.LayoutParams;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -41,6 +42,8 @@ public class HomeActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setTitle("Dashboard");
+		getActionBar().setIcon(R.drawable.tbar_icon);
 		setContentView(R.layout.deccan_courseline_activity_home);
 
 		userID = getIntent().getStringExtra("userID");
@@ -58,6 +61,8 @@ public class HomeActivity extends FragmentActivity {
 		TextView t = new TextView(this);
 		t.setText("Filters:");
 		t.setTextSize(35);
+		t.setTypeface(Typeface.DEFAULT_BOLD);
+		t.setPadding(25, 0, 0, 0);
 		name.addView(t);
 
 		Button add = (Button) findViewById(R.id.add);
@@ -130,8 +135,9 @@ public class HomeActivity extends FragmentActivity {
 				row1.addView(t1);
 				CheckBox c1 = new CheckBox(this);
 				c1.setChecked(true);
-				c1.setPadding(0, 0, 60, 0);
+				//c1.setPadding(0, 0, 40, 0);
 				row1.addView(c1);
+				row1.setPadding(25, 0, 40, 0);
 				courses.addView(row1, new TableLayout.LayoutParams(
 						LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 
