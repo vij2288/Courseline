@@ -35,7 +35,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class SubmissionActivity extends Activity {
+public class PicsActivity extends Activity {
 
 	DBUtil mdb;
 	Cursor mCursor;
@@ -56,10 +56,9 @@ public class SubmissionActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setTitle("Submission Details");
+		setTitle("Manage Pics");
 		getActionBar().setIcon(R.drawable.tbar_icon);
-		setContentView(R.layout.deccan_courseline_activity_submission);
-		//dataList = (ListView) findViewById(R.id.list);
+		setContentView(R.layout.manage_pics);
 
 		mdb = new DBUtil(this);
 
@@ -70,7 +69,37 @@ public class SubmissionActivity extends Activity {
 		subm = (Submission) getIntent().getSerializableExtra("subm");
 		Log.d("SUBM", "Sub ID: " + subm.getSubId());
 		course = mdb.selectCourse(courseID);
-		
+
+		// add pics button listener
+		final String[] option = new String[] { "Take from Camera",
+				"Select from Gallery" };
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.select_dialog_item, option);
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Select Option");
+		builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				Log.d("Selected Item", String.valueOf(which));
+				if (which == 0) {
+					callCamera();
+				}
+				if (which == 1) {
+					callGallery();
+				}
+			}
+		});
+
+		final AlertDialog dialog = builder.create();
+
+		Button b2 = (Button) findViewById(R.id.addPics);
+		b2.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				Log.d("SUBM", "user wants to add a pic note");
+				dialog.show();
+			}
+		});
 	}
 
 	@Override
@@ -78,246 +107,49 @@ public class SubmissionActivity extends Activity {
 		super.onResume();
 
 		if (subm != null && course != null) {
-			Log.d("SUBM", "Inside on resume's condition ");
-/*			String subHead = getString(R.string.sub_head);
-			subHead = "SUBMISSION";
-			((TextView) findViewById(R.id.sub_head)).setText(subHead); */
-			TableLayout subTable = (TableLayout) findViewById(R.id.subTable);
-			subTable.removeAllViews();
-			/*RelativeLayout.LayoutParams parm = (RelativeLayout.LayoutParams)subTable.getLayoutParams();
-			parm.width = 600;//RelativeLayout.LayoutParams.MATCH_PARENT;
-			subTable.setLayoutParams(parm);
-			*/String s1 = null, s2 = null;
-
-			s1 = course.getCourseName();	
-			TableRow row = new TableRow(getBaseContext());
-			TextView t1 = new TextView(getBaseContext());
-			t1.setText(s1);
-			t1.setTextSize(25);
-			t1.setTextColor(Color.DKGRAY);
-			t1.setTypeface(t1.getTypeface(), Typeface.BOLD);
-			row.addView(t1);
-			subTable.addView(row, new TableLayout.LayoutParams(
-					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-
-			s1 = subm.getSubName();	
-			row = new TableRow(getBaseContext());
-			t1 = new TextView(getBaseContext());
-			t1.setText(s1);
-			t1.setTextSize(50);
-			t1.setWidth(0);
-			TableRow.LayoutParams params1 = new TableRow.LayoutParams();
-			params1.weight = 1.0f;
-			t1.setLayoutParams(params1);
-			t1.setPadding(0, 10, 0, 0);
-			t1.setTextColor(Color.rgb(0x2f, 0x66, 0x99));
-			t1.setTypeface(t1.getTypeface(), Typeface.BOLD);
-			row.addView(t1);
-			subTable.addView(row, new TableLayout.LayoutParams(
-					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-			
-			s1 = "Released on";
-			s2 = subm.getReleaseDate().toString();
-			row = new TableRow(getBaseContext());
-			t1 = new TextView(getBaseContext());
-			t1.setText(s1);
-			t1.setTextSize(25);
-			t1.setTextColor(Color.BLACK);
-			//t1.setTypeface(t1.getTypeface(), Typeface.BOLD);
-			row.addView(t1);
-			TextView t2 = new TextView(getBaseContext());
-			t2 = new TextView(getBaseContext());
-			t2.setText(s2);
-			t2.setTextSize(25);
-			t2.setTextColor(Color.BLACK);
-			t2.setTypeface(t2.getTypeface(), Typeface.BOLD);
-			row.addView(t2);			
-			subTable.addView(row, new TableLayout.LayoutParams(
-					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-
-			s1 = "Due on";
-			s2 = subm.getDueDate().toString();
-			row = new TableRow(getBaseContext());
-			t1 = new TextView(getBaseContext());
-			t1.setText(s1);
-			t1.setTextSize(25);
-			t1.setTextColor(Color.BLACK);
-			//t1.setTypeface(t1.getTypeface(), Typeface.BOLD);
-			row.addView(t1);
-			t2 = new TextView(getBaseContext());
-			t2 = new TextView(getBaseContext());
-			t2.setText(s2);
-			t2.setTextSize(25);
-			t2.setTextColor(Color.BLACK);
-			t2.setTypeface(t2.getTypeface(), Typeface.BOLD);
-			row.addView(t2);
-			subTable.addView(row, new TableLayout.LayoutParams(
-					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-
-			s1 = "Weightage";
-			s2 = Integer.toString(subm.getWeightPercent()) + "%";
-			row = new TableRow(getBaseContext());
-			t1 = new TextView(getBaseContext());
-			t1.setText(s1);
-			t1.setTextSize(25);
-			t1.setTextColor(Color.BLACK);
-			//t1.setTypeface(t1.getTypeface(), Typeface.BOLD);
-			row.addView(t1);
-			t2 = new TextView(getBaseContext());
-			t2 = new TextView(getBaseContext());
-			t2.setText(s2);
-			t2.setTextSize(25);
-			t2.setTextColor(Color.BLACK);
-			t2.setTypeface(t2.getTypeface(), Typeface.BOLD);
-			row.addView(t2);
-			subTable.addView(row, new TableLayout.LayoutParams(
-					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-			
-			s1 = "Description";	
-			row = new TableRow(getBaseContext());
-			t1 = new TextView(getBaseContext());
-			t1.setText(s1);
-			t1.setTextSize(35);
-			params1 = new TableRow.LayoutParams();
-			params1.weight = 1.0f;
-			t1.setLayoutParams(params1);
-			t1.setPadding(0, 20, 0, 0);
-			t1.setTextColor(Color.GRAY);
-			t1.setTypeface(t1.getTypeface(), Typeface.BOLD);
-			row.addView(t1);
-			subTable.addView(row, new TableLayout.LayoutParams(
-					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-			
-			s1 = subm.getDescription();	
-			row = new TableRow(getBaseContext());
-			t1 = new TextView(getBaseContext());
-			t1.setText(s1);
-			t1.setTextSize(20);
-			t1.setWidth(0);
-
-			params1 = new TableRow.LayoutParams();
-			params1.weight = 1.0f;
-			t1.setLayoutParams(params1);
-			
-			t1.setTextColor(Color.BLACK);
-			row.addView(t1);
-			subTable.addView(row, new TableLayout.LayoutParams(
-					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-			
-			s1 = "Personal Note";	
-			row = new TableRow(getBaseContext());
-			t1 = new TextView(getBaseContext());
-			t1.setText(s1);
-			t1.setTextSize(35);
-			t1.setWidth(0);
-			params1 = new TableRow.LayoutParams();
-			params1.weight = 1.0f;
-			t1.setLayoutParams(params1);
-			t1.setPadding(0, 20, 0, 0);
-			t1.setTextColor(Color.GRAY);
-			t1.setTypeface(t1.getTypeface(), Typeface.BOLD);
-			row.addView(t1);
-			subTable.addView(row, new TableLayout.LayoutParams(
-					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-			
+			// images list
+			imageArry.clear();
 			mCursor = mdb.selectSub(userID, courseID, subm.getSubId());
 			if (mCursor.getCount() > 0) {
+				Log.d("SUBM", "Checking users pic notes");
 				mCursor.moveToFirst();
-				s1 = mCursor.getString(8);
-				Log.d("SUBM", "Notes" + s1);
-			} else {
-				s1 = "(NO NOTES ADDED)";
-			}
-			row = new TableRow(getBaseContext());
-			t1 = new TextView(getBaseContext());
-			t1.setText(s1);
-			t1.setTextSize(20);
-			t1.setWidth(0);
-
-			params1.weight = 1.0f;
-			t1.setLayoutParams(params1);
-			t1.setTextColor(Color.BLACK);
-			row.addView(t1);
-			subTable.addView(row, new TableLayout.LayoutParams(
-					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-
-			
-			Log.d("SUBM", "Displayed everything except buttons ");
-			// Notes button
-			row = new TableRow(getBaseContext());
-			
-			Button b1 = new Button(getBaseContext());
-            TableRow.LayoutParams params = new TableRow.LayoutParams();
-			params.weight = 1.0f;
-			b1.setPadding(6, 6, 6, 6);
-            b1.setLayoutParams(params);
-            b1.setTextSize(25);
-            b1.setWidth(0);
-            b1.setTypeface(null, Typeface.BOLD);
-            b1.setTextColor(Color.WHITE);
-            b1.setBackground(getResources().getDrawable((R.drawable.blue_menu_btn)));
-			b1.setText("Manage Note");
-			row.setPadding(0, 6, 400, 6);
-			row.addView(b1);
-			subTable.addView(row, new TableLayout.LayoutParams(
-					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-			b1.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View arg0) {
-					Intent i = new Intent(getBaseContext(), NotesActivity.class);
-					i.putExtra("userID", userID);
-					i.putExtra("courseID", courseID);
-					i.putExtra("subm", subm);
-					startActivityForResult(i, 500);
-					overridePendingTransition(R.anim.slide_in_right,
-							R.anim.slide_out_left);
+				int i = 3;
+				int j = 1;
+				while (mCursor.getBlob(i) != null) {
+					Log.d("SUBM", "User has previous notes");
+					Notes n = new Notes();
+					n.setImage(mCursor.getBlob(i));
+					n.setName(Integer.toString(j));
+					imageArry.add(n);
+					i++;
+					j++;
 				}
-			});
+			}
+			Log.d("SUBM", "Imagearray's size " + imageArry.size());
 
-			s1 = "Pictures";	
-			row = new TableRow(getBaseContext());
-			t1 = new TextView(getBaseContext());
-			t1.setText(s1);
-			t1.setTextSize(35);
-			t1.setWidth(0);
-			params1 = new TableRow.LayoutParams();
-			params1.weight = 1.0f;
-			t1.setLayoutParams(params1);
-			t1.setPadding(0, 20, 0, 0);
-			t1.setTextColor(Color.GRAY);
-			t1.setTypeface(t1.getTypeface(), Typeface.BOLD);
-			row.addView(t1);
-			subTable.addView(row, new TableLayout.LayoutParams(
-					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-			
-			Log.d("SUBM", "Going to display the pictures");
-			// Pics button
-			TableRow row1 = new TableRow(getBaseContext());
-			Button b2 = new Button(getBaseContext());
-            params = new TableRow.LayoutParams();
-			params.weight = 0.5f;
-			b2.setPadding(6, 100, 6, 6);
-            b2.setLayoutParams(params);
-            b2.setTextSize(25);
-            b2.setWidth(0);
-            b2.setTypeface(null, Typeface.BOLD);
-            b2.setTextColor(Color.WHITE);
-            b2.setBackground(getResources().getDrawable((R.drawable.blue_menu_btn)));
-			b2.setText("Manage Pics");
-			row1.setPadding(0, 6, 400, 6);
-			row1.addView(b2);
-			subTable.addView(row1, new TableLayout.LayoutParams(
-					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-			
-			// manage pics
-			b2.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					Intent sub2pics = new Intent(getBaseContext(),
-							PicsActivity.class);
-					sub2pics.putExtra("userID", userID);
-					sub2pics.putExtra("courseID", courseID);
-					sub2pics.putExtra("subm", subm);
-					startActivity(sub2pics);
+			imageAdapter = new NotesAdapter(this,
+					R.layout.deccan_courseline_notes, imageArry);
+			dataList = (ListView) findViewById(R.id.list);
+			dataList.setAdapter(imageAdapter);
+
+			dataList.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View v,
+						final int position, long id) {
+					imageName = imageArry.get(position).getImage();
+					String name = imageArry.get(position).getName();
+					ByteArrayInputStream imageStream = new ByteArrayInputStream(
+							imageName);
+					theImage = BitmapFactory.decodeStream(imageStream);
+					Intent intent = new Intent(getBaseContext(),
+							ImageActivity.class);
+					intent.putExtra("imagename", theImage);
+					intent.putExtra("imageid", name);
+					intent.putExtra("userID", userID);
+					intent.putExtra("courseID", courseID);
+					intent.putExtra("subm", subm);
+					startActivity(intent);
 				}
 			});
 		}

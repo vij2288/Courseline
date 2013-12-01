@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,7 +53,8 @@ public class NotesAdapter extends ArrayAdapter<Notes> {
 			Log.d("NOTES_AD", "Images list already exists.");
 		}
 		Notes note = data.get(position);
-		holder.txtTitle.setText(note.name);
+		holder.txtTitle.setText("Pic note " + note.name);
+		holder.txtTitle.setTextColor(Color.BLACK);
 				//note.getName());
 		byte[] outImage = note.image;
 		ByteArrayInputStream imageStream = new ByteArrayInputStream(outImage);

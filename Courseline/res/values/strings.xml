@@ -41,5 +41,6 @@
     <string name="addNotes">Manage Notes</string>
     <string name="addPics">Manage Pictures</string>
     <string name="updateNote">Update Note</string>
+    <string name="addImg">Add Image</string>
 
 </resources>

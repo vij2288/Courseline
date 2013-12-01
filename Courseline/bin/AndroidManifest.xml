@@ -68,6 +68,10 @@
             android:name="deccan.courseline.ImageActivity"
             android:label="@string/title_activity_image" >
         </activity>
-    </application>
+        <activity
+            android:name="deccan.courseline.PicsActivity"
+            android:label="@string/title_activity_image" >
+        </activity>
+        </application>
 
 </manifest>

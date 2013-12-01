@@ -62,8 +62,9 @@ public final class R {
     }
     public static final class id {
         public static final int Editbutton=0x7f0a001c;
-        public static final int action_settings=0x7f0a0024;
+        public static final int action_settings=0x7f0a0026;
         public static final int add=0x7f0a0009;
+        public static final int addPics=0x7f0a0024;
         public static final int add_del_buttons=0x7f0a0007;
         public static final int buttondelete=0x7f0a0012;
         public static final int buttons=0x7f0a0008;
@@ -74,11 +75,12 @@ public final class R {
         public static final int delete_Text=0x7f0a0005;
         public static final int editNotes=0x7f0a001b;
         public static final int firstName=0x7f0a001d;
-        public static final int imageView1=0x7f0a0011;
-        public static final int imagenotes=0x7f0a0013;
+        public static final int imageView1=0x7f0a0018;
+        public static final int imagenotes=0x7f0a0011;
         public static final int imgIcon=0x7f0a0022;
-        public static final int loginEmail=0x7f0a0017;
-        public static final int loginPassword=0x7f0a0014;
+        public static final int list=0x7f0a0025;
+        public static final int loginEmail=0x7f0a0016;
+        public static final int loginPassword=0x7f0a0013;
         public static final int notes_head=0x7f0a001a;
         public static final int resultsTable=0x7f0a0003;
         public static final int rowFilters=0x7f0a000d;
@@ -86,8 +88,8 @@ public final class R {
         public static final int search=0x7f0a0000;
         public static final int searchButton=0x7f0a0002;
         public static final int searchText=0x7f0a0001;
-        public static final int signinButton=0x7f0a0016;
-        public static final int signupButton=0x7f0a0015;
+        public static final int signinButton=0x7f0a0015;
+        public static final int signupButton=0x7f0a0014;
         public static final int signupEmail=0x7f0a001e;
         public static final int signupPwd=0x7f0a001f;
         public static final int signupRePwd=0x7f0a0020;
@@ -95,7 +97,7 @@ public final class R {
         public static final int tableCourses=0x7f0a000e;
         public static final int tableFilters=0x7f0a000b;
         public static final int tableSubmissions=0x7f0a000f;
-        public static final int textView1=0x7f0a0018;
+        public static final int textView1=0x7f0a0017;
         public static final int textView2=0x7f0a0019;
         public static final int txtTitle=0x7f0a0023;
     }
@@ -125,6 +127,7 @@ public final class R {
     }
     public static final class string {
         public static final int action_settings=0x7f070001;
+        public static final int addImg=0x7f070028;
         public static final int addNotes=0x7f070025;
         public static final int addPics=0x7f070026;
         public static final int add_c=0x7f070013;

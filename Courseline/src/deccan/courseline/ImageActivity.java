@@ -34,6 +34,8 @@ public class ImageActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setTitle("View Image");
+		getActionBar().setIcon(R.drawable.tbar_icon);
 		setContentView(R.layout.deccan_courseline_activity_image);
 		btnDelete = (Button) findViewById(R.id.buttondelete);
 		imageDetail = (ImageView) findViewById(R.id.imagenotes);

@@ -9,31 +9,25 @@
     tools:context=".ImageActivity" >
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/imagenotes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/buttondelete"
         android:layout_centerHorizontal="true"
-        android:contentDescription="@string/desc"
-        android:src="@drawable/courseline_logo" />
+        android:layout_marginTop="15dp"
+        android:contentDescription="@string/desc" />
 
     <Button
         android:id="@+id/buttondelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="19dp"
-        android:text="@string/delete_button" />
-
-    <ImageView
-        android:id="@+id/imagenotes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/buttondelete"
-        android:layout_alignLeft="@+id/imageView1"
-        android:layout_marginBottom="98dp"
-        android:contentDescription="@string/desc"
-        android:src="@drawable/courseline_logo" />
+        android:layout_marginTop="20dp"
+        android:background="@drawable/red_menu_btn"
+        android:text="@string/delete_button"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 
 </RelativeLayout>
