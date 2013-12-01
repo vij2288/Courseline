@@ -207,6 +207,20 @@ public class LocalUtil {
 		doc.getDocumentElement().normalize();
 		NodeList nList = doc.getElementsByTagName("allowed_users");
 
+		Node alUsers = nList.item(0);
+		Element el = (Element) alUsers;
+		int i = 0;
+		while (el.getElementsByTagName("user").item(i) != null) {
+			String uname = el.getElementsByTagName("user").item(i)
+					.getTextContent();
+			Log.d("XML", "email: " + el.getElementsByTagName("user").item(i)
+						.getTextContent());
+			if (uname.equals(email)) {
+				return true;
+			}
+			i++;
+		}
+		/*
 		for (int i = 0; i < nList.getLength(); i++) {
 			Node usr = nList.item(i);
 
@@ -220,7 +234,7 @@ public class LocalUtil {
 					return true;
 				}
 			}
-		}
+		}*/
 		return false;
 	}
 

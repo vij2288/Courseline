@@ -69,6 +69,9 @@ public class AdditionActivity extends Activity {
 		search.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
+				// clear table
+				TableLayout clr = (TableLayout) findViewById(R.id.resultsTable);
+				clr.removeAllViews();
 				Log.d("ADDITION", "Inside on click of search");
 
 				// user allowed?
