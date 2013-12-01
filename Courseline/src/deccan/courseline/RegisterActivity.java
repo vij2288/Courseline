@@ -22,39 +22,60 @@ public class RegisterActivity extends Activity {
 	boolean loginSuccess = false;
 	Cursor mCursor;
 	EditText fname = null, email = null, pwd = null, repwd = null;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setTitle("New User Registration");
 		getActionBar().setIcon(R.drawable.tbar_icon);
 		setContentView(R.layout.deccan_courseline_activity_register);
-		mdb=new DBUtil(this);
-		
+		mdb = new DBUtil(this);
+
 		fname = (EditText) findViewById(R.id.firstName);
 		email = (EditText) findViewById(R.id.signupEmail);
 		pwd = (EditText) findViewById(R.id.signupPwd);
 		repwd = (EditText) findViewById(R.id.signupRePwd);
 		Button signup = (Button) findViewById(R.id.signupButton);
-		
+
 		signup.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				Log.d("REGISTER", "pwd: " + pwd.toString() + " repwd: " + repwd.toString());
-				if (pwd.getText().toString().equals(repwd.getText().toString())) {
-					mdb.insertUser(fname.getText().toString(), email.getText().toString(), pwd.getText().toString());
+				if (((fname.getText().toString() != null)
+						&& (email.getText().toString() != null) 
+						&& (email.getText().toString().contains("@") 
+						&& (email.getText().toString().endsWith(".edu"))))
+						&& (pwd.getText().toString() != null)
+						&& (repwd.getText().toString() != null)) {
 					
-					Toast toast = Toast.makeText(getBaseContext(),"Registration Successful!",Toast.LENGTH_LONG);
-					toast.setGravity(Gravity.CENTER, 0, 0);
-					toast.show();
-					
-					Intent reg2home = new Intent(getBaseContext(),HomeActivity.class);
-					reg2home.putExtra("userID", email.getText().toString());
-					startActivityForResult(reg2home, 500);
-					overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-				// if passwords mismatch
+					Log.d("REGISTER", "pwd: " + pwd.toString() + " repwd: "
+							+ repwd.toString());
+					if (pwd.getText().toString()
+							.equals(repwd.getText().toString())) {
+						mdb.insertUser(fname.getText().toString(), email
+								.getText().toString(), pwd.getText().toString());
+
+						Toast toast = Toast.makeText(getBaseContext(),
+								"Registration Successful!", Toast.LENGTH_LONG);
+						toast.setGravity(Gravity.CENTER, 0, 0);
+						toast.show();
+
+						Intent reg2home = new Intent(getBaseContext(),
+								HomeActivity.class);
+						reg2home.putExtra("userID", email.getText().toString());
+						startActivityForResult(reg2home, 500);
+						overridePendingTransition(R.anim.slide_in_right,
+								R.anim.slide_out_left);
+						// if passwords mismatch
+					} else {
+						Toast toast = Toast.makeText(getBaseContext(),
+								"Password mismatch! Retry.", Toast.LENGTH_LONG);
+						toast.setGravity(Gravity.CENTER, 0, 0);
+						toast.show();
+					}
 				} else {
-					Toast toast = Toast.makeText(getBaseContext(),"Password mismatch! Retry.",Toast.LENGTH_LONG);
+					Toast toast = Toast.makeText(getBaseContext(),
+							"Please enter valid email and password",
+							Toast.LENGTH_LONG);
 					toast.setGravity(Gravity.CENTER, 0, 0);
 					toast.show();
 				}
@@ -65,7 +86,7 @@ public class RegisterActivity extends Activity {
 			}
 		});
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -75,7 +96,7 @@ public class RegisterActivity extends Activity {
 	@Override
 	protected void onRestart() {
 		super.onRestart();
-		
+
 	}
 
 	@Override
@@ -83,29 +104,29 @@ public class RegisterActivity extends Activity {
 		super.onStart();
 
 	}
-	
+
 	@Override
 	protected void onPause() {
 		super.onPause();
 
 	}
-	
+
 	@Override
 	protected void onStop() {
 		super.onStop();
-		
+
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 
 	}
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    	overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-    }
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

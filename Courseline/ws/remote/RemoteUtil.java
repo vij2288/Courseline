@@ -13,7 +13,7 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
 
-public class RemoteUtil extends AsyncTask<String, Void, String>{
+public class RemoteUtil extends AsyncTask<String, Void, String> {
 	protected String doInBackground(String... url) {
 		String msg;
 		try {
@@ -38,8 +38,13 @@ public class RemoteUtil extends AsyncTask<String, Void, String>{
 			// create a new file, specifying the path, and the filename
 			// which we want to save the file as.
 			int length = url[0].length();
-			String fname = url[0].toString().substring((length-9));
-			Log.d("RemoteUtil",fname);
+			String fname = null;
+			if (url[1].equals("Course")) {
+				fname = url[0].toString().substring((length - 9));
+			} else if (url[1].equals("Users")) {
+				fname = url[0].toString().substring((length - 15));
+			}
+			Log.d("RemoteUtil", fname);
 			File file = new File(SDCardRoot, fname);
 
 			// this will be used to write the downloaded data into the file we
@@ -72,16 +77,15 @@ public class RemoteUtil extends AsyncTask<String, Void, String>{
 			fileOutput.close();
 
 			// catch some possible errors...
-		}catch(FileNotFoundException e){
+		} catch (FileNotFoundException e) {
 			return "Not Found";
-		}
-		catch (MalformedURLException e) {
+		} catch (MalformedURLException e) {
 			e.printStackTrace();
 			return "Error";
 		} catch (IOException e) {
 			e.printStackTrace();
 			return "Error";
-		} 
+		}
 		return "Success";
 	}
 

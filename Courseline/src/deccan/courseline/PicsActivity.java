@@ -223,11 +223,12 @@ public class PicsActivity extends Activity {
 		Intent intent = new Intent();
 		intent.setType("image/*");
 		intent.setAction(Intent.ACTION_GET_CONTENT);
-		intent.putExtra("crop", "true");
+		/*intent.putExtra("crop", "true");
 		intent.putExtra("aspectX", 0);
 		intent.putExtra("aspectY", 0);
 		intent.putExtra("outputX", 400);
 		intent.putExtra("outputY", 300);
+		*/
 		intent.putExtra("return-data", true);
 		startActivityForResult(
 				Intent.createChooser(intent, "Complete action using"),

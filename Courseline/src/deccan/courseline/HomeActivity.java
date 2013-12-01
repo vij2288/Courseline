@@ -36,8 +36,7 @@ public class HomeActivity extends FragmentActivity {
 	public String userID = null;
 	DBUtil mdb;
 	Cursor mCursor;
-	int[] color = new int[] { 0xffff0000, 0xffff007f, 0xff0000ff, 0xff006633,
-			0xff660066 };
+	int[] color = new int[] { 0xff660066, 0xffff0000, 0xff006633, 0xffff007f, 0xff0000ff};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

@@ -172,4 +172,45 @@ public class LocalUtil {
 		}
 		student.courses.add(c);
 	}
+
+	public static boolean checkUsersFile(String email, String filename) {
+
+		Log.d("LUTIL", "fname: " + filename);
+		/* Use DOM XML Parser to parse Users data */
+		File fXmlFile = new File(filename);
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder dBuilder;
+		Document doc = null;
+		try {
+			dBuilder = dbFactory.newDocumentBuilder();
+			doc = dBuilder.parse(fXmlFile);
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		doc.getDocumentElement().normalize();
+		NodeList nList = doc.getElementsByTagName("allowed_users");
+
+		Node nNode = nList.item(0);
+
+		// Parse Course-specific fields
+		if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+			Element eElement = (Element) nNode;
+
+			String user = eElement.getElementsByTagName("user")
+					.item(0).getTextContent();
+			if ((user != null) && (user.equalsIgnoreCase(email))) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 }

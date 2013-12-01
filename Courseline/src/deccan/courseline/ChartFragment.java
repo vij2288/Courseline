@@ -20,7 +20,6 @@ import org.achartengine.renderer.*;
 import entities.Course;
 import entities.SubType;
 import entities.Submission;
-//import android.app.Fragment;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.database.Cursor;
@@ -32,21 +31,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 
 public class ChartFragment extends Fragment {
 
 	GraphicalView chartView = null;
 	XYMultipleSeriesRenderer render = new XYMultipleSeriesRenderer();
 	XYMultipleSeriesDataset seriesV = new XYMultipleSeriesDataset();
-	int[] color = new int[] { 0xffff0000, 0xffff007f, 0xff0000ff, 0xff006633,
-			0xff660066 };
+	int[] color = new int[] { 0xff660066, 0xffff0000, 0xff006633, 0xffff007f, 0xff0000ff};
 	int count = 0;
 	boolean[] crs = new boolean[5];
 	boolean[] subs = new boolean[SubType.values().length];
