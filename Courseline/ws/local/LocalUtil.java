@@ -59,7 +59,8 @@ public class LocalUtil {
 		if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 			Element eElement = (Element) nNode;
 
-			if (eElement.getElementsByTagName("course_name").item(0).getTextContent() != null) {
+			if (eElement.getElementsByTagName("course_name").item(0)
+					.getTextContent() != null) {
 				String name = eElement.getElementsByTagName("course_name")
 						.item(0).getTextContent();
 				c.setCourseName(name);
@@ -71,24 +72,26 @@ public class LocalUtil {
 				c.setUniv(univ);
 			}
 
-			if (eElement.getElementsByTagName("course_number").item(0).getTextContent() != null) {
+			if (eElement.getElementsByTagName("course_number").item(0)
+					.getTextContent() != null) {
 				String num = eElement.getElementsByTagName("course_number")
 						.item(0).getTextContent();
 				c.setCourseNumber(num);
 			}
 
-			if (eElement.getElementsByTagName("semester").item(0).getTextContent() != null) {
+			if (eElement.getElementsByTagName("semester").item(0)
+					.getTextContent() != null) {
 				String sem = eElement.getElementsByTagName("semester").item(0)
 						.getTextContent();
 				c.setSemester(sem);
 			}
-			
+
 			if (eElement.getElementsByTagName("email").item(0).getTextContent() != null) {
 				String email = eElement.getElementsByTagName("email").item(0)
 						.getTextContent();
 				c.setEmail(email);
 			}
-			
+
 			// Get list of all submissions
 			NodeList subList = eElement.getElementsByTagName("submission");
 
@@ -102,7 +105,8 @@ public class LocalUtil {
 				if (sub.getNodeType() == Node.ELEMENT_NODE) {
 					Element subElement = (Element) sub;
 
-					if (subElement.getElementsByTagName("subName").item(0).getTextContent() != null) {
+					if (subElement.getElementsByTagName("subName").item(0)
+							.getTextContent() != null) {
 						String subName = subElement
 								.getElementsByTagName("subName").item(0)
 								.getTextContent();
@@ -113,14 +117,16 @@ public class LocalUtil {
 					int subId = Integer.parseInt(subElement.getAttribute("id"));
 					s.setSubId(subId);
 
-					if (subElement.getElementsByTagName("subType").item(0).getTextContent() != null) {
+					if (subElement.getElementsByTagName("subType").item(0)
+							.getTextContent() != null) {
 						SubType subType = SubType.valueOf(subElement
 								.getElementsByTagName("subType").item(0)
 								.getTextContent().toUpperCase());
 						s.setSubType(subType);
 					}
 
-					//Log.d("XML", "relDate: " + subElement.getElementsByTagName("releaseDate").item(0).getTextContent());
+					// Log.d("XML", "relDate: " +
+					// subElement.getElementsByTagName("releaseDate").item(0).getTextContent());
 					if (subElement.getElementsByTagName("releaseDate").item(0) != null) {
 						DateFormat formatter = new SimpleDateFormat(
 								"MM/dd/yyyy hh:mm");
@@ -143,22 +149,25 @@ public class LocalUtil {
 						s.setReleaseDate(releaseDate);
 						s.setDueDate(dueDate);
 					}
-					
-					if (subElement.getElementsByTagName("weightPercent").item(0).getTextContent() != null) {
+
+					if (subElement.getElementsByTagName("weightPercent")
+							.item(0).getTextContent() != null) {
 						int weightPercent = Integer.parseInt(subElement
 								.getElementsByTagName("weightPercent").item(0)
 								.getTextContent());
 						s.setWeightPercent(weightPercent);
 					}
 
-					if (subElement.getElementsByTagName("weightPoints").item(0).getTextContent() != null) {
+					if (subElement.getElementsByTagName("weightPoints").item(0)
+							.getTextContent() != null) {
 						int weightPoints = Integer.parseInt(subElement
 								.getElementsByTagName("weightPoints").item(0)
 								.getTextContent());
 						s.setWeightPoints(weightPoints);
 					}
 
-					if (subElement.getElementsByTagName("description").item(0).getTextContent() != null) {
+					if (subElement.getElementsByTagName("description").item(0)
+							.getTextContent() != null) {
 						String desc = subElement
 								.getElementsByTagName("description").item(0)
 								.getTextContent();
@@ -198,19 +207,21 @@ public class LocalUtil {
 		doc.getDocumentElement().normalize();
 		NodeList nList = doc.getElementsByTagName("allowed_users");
 
-		Node nNode = nList.item(0);
+		for (int i = 0; i < nList.getLength(); i++) {
+			Node usr = nList.item(i);
 
-		// Parse Course-specific fields
-		if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-			Element eElement = (Element) nNode;
+			// Parse Course-specific fields
+			if (usr.getNodeType() == Node.ELEMENT_NODE) {
+				Element eElement = (Element) usr;
 
-			String user = eElement.getElementsByTagName("user")
-					.item(0).getTextContent();
-			if ((user != null) && (user.equalsIgnoreCase(email))) {
-				return true;
+				String user = eElement.getElementsByTagName("user").item(0)
+						.getTextContent();
+				if ((user != null) && (user.equalsIgnoreCase(email))) {
+					return true;
+				}
 			}
 		}
 		return false;
 	}
-	
+
 }
