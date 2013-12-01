@@ -82,7 +82,13 @@ public class LocalUtil {
 						.getTextContent();
 				c.setSemester(sem);
 			}
-
+			
+			if (eElement.getElementsByTagName("email").item(0).getTextContent() != null) {
+				String email = eElement.getElementsByTagName("email").item(0)
+						.getTextContent();
+				c.setEmail(email);
+			}
+			
 			// Get list of all submissions
 			NodeList subList = eElement.getElementsByTagName("submission");
 

@@ -50,6 +50,7 @@ public class DBUtil extends SQLiteOpenHelper {
 	private static String courseColumn9 = "WeightPercentage";
 	private static String courseColumn10 = "WeightPonits";
 	private static String courseColumn11 = "Desc";
+	private static String courseColumn12 = "Email";
 
 	private static String subColumn1 = "UserID";
 	private static String subColumn2 = "CourseID";
@@ -79,7 +80,7 @@ public class DBUtil extends SQLiteOpenHelper {
 				+ courseColumn4 + "," + courseColumn5 + "," + courseColumn6
 				+ "," + courseColumn7 + "," + courseColumn8 + ","
 				+ courseColumn9 + "," + courseColumn10 + "," + courseColumn11
-				+ ");";
+				+ "," + courseColumn12 + ");";
 		db.execSQL(sql);
 
 		sql = "CREATE TABLE " + subTable + " (" + subColumn1 + " NOT NULL, "
@@ -132,6 +133,7 @@ public class DBUtil extends SQLiteOpenHelper {
 			values.put(courseColumn9, s.getWeightPercent());
 			values.put(courseColumn10, s.getWeightPoints());
 			values.put(courseColumn11, s.getDescription());
+			values.put(courseColumn12, c.getEmail());
 			ret = db.insert(courseTable, null, values);
 			if (ret == -1) {
 				Log.d("ADDITION",
@@ -190,7 +192,7 @@ public class DBUtil extends SQLiteOpenHelper {
 			course.setCourseName(mCursor.getString(0));
 			course.setCourseNumber(mCursor.getString(1));
 			course.setSemester(mCursor.getString(2));
-
+			course.setEmail(mCursor.getString(11));
 			while (count > 0) {
 				Submission sub = new Submission();
 				sub.setSubId(mCursor.getInt(3));
@@ -276,23 +278,13 @@ public class DBUtil extends SQLiteOpenHelper {
 	public void updateSub(String userID, String cID, int subID, byte[] pic1,
 			byte[] pic2, byte[] pic3, byte[] pic4, byte[] pic5, String notes) {
 		SQLiteDatabase db = this.getWritableDatabase();
-		Cursor mCursor;
 		Log.d("DBUTIL", "Updating the submission with id " + subID
 				+ " for the user " + userID + " of the course " + cID);
 
-		/*
-		 * String sql = "UPDATE " + subTable + " SET " + subColumn4 + "='" +
-		 * pic1 + "', " + subColumn5 + "='" + pic2 + "', " + subColumn6 + "'=" +
-		 * pic3 + "', " + subColumn7 + "='" + pic4 + "', " + subColumn8 + "='" +
-		 * pic5 + "', " + subColumn9 + "='" + notes + "'" + " WHERE " +
-		 * subColumn1 + "='" + userID + "' AND " + subColumn2 + "='" + cID+
-		 * "' AND " +subColumn3+"="+subID+";";
-		 */
-		// Log.d("DBUTIL","Update Query "+sql);
+		String whereClause = subColumn1 + "='" + userID + "'" + " AND "
+				+ subColumn2 + "='" + cID + "'" + " AND " + subColumn3 + " ="
+				+ subID;
 
-		String whereClause = subColumn1 + "='"+userID+"'" + " AND " + subColumn2 + "='"+cID+"'"
-				+ " AND " + subColumn3 + " ="+subID;
-		
 		Log.d("DBUTIL", "update ->Notes " + notes);
 		ContentValues values = new ContentValues();
 		values.put(subColumn4, pic1);
@@ -303,11 +295,7 @@ public class DBUtil extends SQLiteOpenHelper {
 		values.put(subColumn9, notes);
 		int count = db.update(subTable, values, whereClause, null);
 		Log.d("DBUTIL", "update count " + count);
-		/*
-		 * mCursor=db.rawQuery(sql, null); if(mCursor.getCount()>0){
-		 * Log.d("DBUTIL", "Table updated with count "+ mCursor.getCount() ); }
-		 * else Log.d("DBUTIL", "no update happened "+ mCursor.getCount() );
-		 */
+
 	}
 
 }

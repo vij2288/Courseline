@@ -2,6 +2,9 @@ package deccan.courseline;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.concurrent.ExecutionException;
+
+import remote.RemoteUtil;
 
 import entities.Course;
 import entities.Student;
@@ -9,6 +12,7 @@ import entities.Student;
 import local.DBUtil;
 import local.LocalUtil;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.app.Activity;
@@ -32,7 +36,7 @@ import android.widget.Toast;
 
 public class AdditionActivity extends Activity {
 
-	ArrayList<String> courses = new ArrayList<String>();
+//	ArrayList<String> courses = new ArrayList<String>();
 	DBUtil mdb;
 	Cursor mCursor;
 	EditText searchText;
@@ -52,15 +56,16 @@ public class AdditionActivity extends Activity {
 
 		mdb = new DBUtil(this);
 
-		courses.add("15213");
-		courses.add("18644");
-		courses.add("18641");
+		//courses.add("15213");
+		//courses.add("18644");
+		//courses.add("18641");
 		
 		searchText = (EditText) findViewById(R.id.searchText);		
 		TableRow.LayoutParams par = new TableRow.LayoutParams();
 		par.weight = 0.6f;
 		searchText.setLayoutParams(par);
 		search = (Button) findViewById(R.id.searchButton);
+		
 		// Search/Add Button click listeners
 		search.setOnClickListener(new OnClickListener() {
 			@Override
@@ -110,7 +115,7 @@ public class AdditionActivity extends Activity {
 										if (mCursor.getString(colIndex)
 												.equalsIgnoreCase(
 														searchText.getText()
-																.toString())) {
+														.toString())) {
 											found = true;
 											// toast present
 											Toast toast = Toast.makeText(
@@ -220,18 +225,21 @@ public class AdditionActivity extends Activity {
 
 					TableLayout results = (TableLayout) findViewById(R.id.resultsTable);
 					results.removeAllViews();
-					Iterator<String> it = courses.iterator();
-					while (it.hasNext()) {
-						String s = it.next();
-						if (s.equalsIgnoreCase(searchText.getText().toString())) {
-
+					String cID = searchText.getText().toString();
+					String url ="https://dl.dropboxusercontent.com/u/102619389/"+cID+".xml";
+					Log.d("ADDITION", "url is : "+url);
+					RemoteUtil rm = new RemoteUtil();
+					AsyncTask<String, Void, String> result = rm.execute(url);
+					try {
+						Log.d("ADDITION",result.get());
+						if(result.get().equals("Success")){
 							Log.d("ADDITION", "contacting server");
 							TableRow row1 = new TableRow(getBaseContext());
 							TextView t1 = new TextView(getBaseContext());
 							TableRow.LayoutParams params = new TableRow.LayoutParams();
 							params.weight = 0.6f;
 							t1.setLayoutParams(params);
-							t1.setText(s);
+							t1.setText(cID);
 							t1.setTextSize(25);
 							t1.setTextColor(Color.BLACK);
 							row1.addView(t1);
@@ -250,15 +258,14 @@ public class AdditionActivity extends Activity {
 							b1.setOnClickListener(new OnClickListener() {
 								@Override
 								public void onClick(View arg0) {
-									if (courses.contains(searchText.getText()
-											.toString())) {
 										Student student = new Student();
 										String filename = Environment
 												.getExternalStorageDirectory()
 												.getPath()
-												+ "/Download/cmu_f13_"
+												+ "/Download/"
 												+ searchText.getText()
-														.toString() + ".xml";
+												.toString() + ".xml";
+										Log.d("ADDITION",filename);
 										System.out.println("Static file path: "
 												+ filename);
 										LocalUtil.ImportCourseData(student,
@@ -307,8 +314,8 @@ public class AdditionActivity extends Activity {
 														mdb.updateUser(
 																userID,
 																searchText
-																		.getText()
-																		.toString(),
+																.getText()
+																.toString(),
 																null, null,
 																null, null, 1);
 														break;
@@ -319,8 +326,8 @@ public class AdditionActivity extends Activity {
 																userID,
 																mCursor.getString(2),
 																searchText
-																		.getText()
-																		.toString(),
+																.getText()
+																.toString(),
 																null, null,
 																null, 2);
 														break;
@@ -332,8 +339,8 @@ public class AdditionActivity extends Activity {
 																mCursor.getString(2),
 																mCursor.getString(3),
 																searchText
-																		.getText()
-																		.toString(),
+																.getText()
+																.toString(),
 																null, null, 3);
 														break;
 													case 3:
@@ -345,8 +352,8 @@ public class AdditionActivity extends Activity {
 																mCursor.getString(3),
 																mCursor.getString(4),
 																searchText
-																		.getText()
-																		.toString(),
+																.getText()
+																.toString(),
 																null, 4);
 														break;
 													case 4:
@@ -359,8 +366,8 @@ public class AdditionActivity extends Activity {
 																mCursor.getString(4),
 																mCursor.getString(5),
 																searchText
-																		.getText()
-																		.toString(),
+																.getText()
+																.toString(),
 																5);
 														break;
 
@@ -417,18 +424,30 @@ public class AdditionActivity extends Activity {
 												}
 											}
 										}
-									} else {
-										Toast toast = Toast.makeText(
-												getBaseContext(),
-												"Course not found.",
-												Toast.LENGTH_LONG);
-										toast.setGravity(Gravity.CENTER, 0, 0);
-										toast.show();
-									}
+									/*else {
+										
+									}*/
 								}
 							});
+							
 						}
+						else{
+							Toast toast = Toast.makeText(
+									getBaseContext(),
+									"Course not found.",
+									Toast.LENGTH_LONG);
+							toast.setGravity(Gravity.CENTER, 0, 0);
+							toast.show();							
+						}
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					} catch (ExecutionException e) {
+						e.printStackTrace();
 					}
+					//Iterator<String> it = courses.iterator();
+					//while (it.hasNext()) {
+						//String s = it.next();		
+					
 				}
 			}
 		});
@@ -450,14 +469,14 @@ public class AdditionActivity extends Activity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		
+
 	}
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-    }
-    
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+	}
+
 	@Override
 	protected void onPause() {
 		super.onPause();

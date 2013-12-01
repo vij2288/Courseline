@@ -1,6 +1,5 @@
 package deccan.courseline;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
@@ -8,32 +7,25 @@ import local.DBUtil;
 import entities.Course;
 import entities.Notes;
 import entities.Submission;
-import android.R.color;
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ActionBar.LayoutParams;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Toast;
 
 public class SubmissionActivity extends Activity {
 
@@ -59,7 +51,7 @@ public class SubmissionActivity extends Activity {
 		setTitle("Submission Details");
 		getActionBar().setIcon(R.drawable.tbar_icon);
 		setContentView(R.layout.deccan_courseline_activity_submission);
-		//dataList = (ListView) findViewById(R.id.list);
+		// dataList = (ListView) findViewById(R.id.list);
 
 		mdb = new DBUtil(this);
 
@@ -70,7 +62,7 @@ public class SubmissionActivity extends Activity {
 		subm = (Submission) getIntent().getSerializableExtra("subm");
 		Log.d("SUBM", "Sub ID: " + subm.getSubId());
 		course = mdb.selectCourse(courseID);
-		
+
 	}
 
 	@Override
@@ -79,17 +71,21 @@ public class SubmissionActivity extends Activity {
 
 		if (subm != null && course != null) {
 			Log.d("SUBM", "Inside on resume's condition ");
-/*			String subHead = getString(R.string.sub_head);
-			subHead = "SUBMISSION";
-			((TextView) findViewById(R.id.sub_head)).setText(subHead); */
+			/*
+			 * String subHead = getString(R.string.sub_head); subHead =
+			 * "SUBMISSION"; ((TextView)
+			 * findViewById(R.id.sub_head)).setText(subHead);
+			 */
 			TableLayout subTable = (TableLayout) findViewById(R.id.subTable);
 			subTable.removeAllViews();
-			/*RelativeLayout.LayoutParams parm = (RelativeLayout.LayoutParams)subTable.getLayoutParams();
-			parm.width = 600;//RelativeLayout.LayoutParams.MATCH_PARENT;
-			subTable.setLayoutParams(parm);
-			*/String s1 = null, s2 = null;
+			/*
+			 * RelativeLayout.LayoutParams parm =
+			 * (RelativeLayout.LayoutParams)subTable.getLayoutParams();
+			 * parm.width = 600;//RelativeLayout.LayoutParams.MATCH_PARENT;
+			 * subTable.setLayoutParams(parm);
+			 */String s1 = null, s2 = null;
 
-			s1 = course.getCourseName();	
+			s1 = course.getCourseName();
 			TableRow row = new TableRow(getBaseContext());
 			TextView t1 = new TextView(getBaseContext());
 			t1.setText(s1);
@@ -100,7 +96,7 @@ public class SubmissionActivity extends Activity {
 			subTable.addView(row, new TableLayout.LayoutParams(
 					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 
-			s1 = subm.getSubName();	
+			s1 = subm.getSubName();
 			row = new TableRow(getBaseContext());
 			t1 = new TextView(getBaseContext());
 			t1.setText(s1);
@@ -115,7 +111,7 @@ public class SubmissionActivity extends Activity {
 			row.addView(t1);
 			subTable.addView(row, new TableLayout.LayoutParams(
 					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-			
+
 			s1 = "Released on";
 			s2 = subm.getReleaseDate().toString();
 			row = new TableRow(getBaseContext());
@@ -123,7 +119,7 @@ public class SubmissionActivity extends Activity {
 			t1.setText(s1);
 			t1.setTextSize(25);
 			t1.setTextColor(Color.BLACK);
-			//t1.setTypeface(t1.getTypeface(), Typeface.BOLD);
+			// t1.setTypeface(t1.getTypeface(), Typeface.BOLD);
 			row.addView(t1);
 			TextView t2 = new TextView(getBaseContext());
 			t2 = new TextView(getBaseContext());
@@ -131,7 +127,7 @@ public class SubmissionActivity extends Activity {
 			t2.setTextSize(25);
 			t2.setTextColor(Color.BLACK);
 			t2.setTypeface(t2.getTypeface(), Typeface.BOLD);
-			row.addView(t2);			
+			row.addView(t2);
 			subTable.addView(row, new TableLayout.LayoutParams(
 					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 
@@ -142,7 +138,7 @@ public class SubmissionActivity extends Activity {
 			t1.setText(s1);
 			t1.setTextSize(25);
 			t1.setTextColor(Color.BLACK);
-			//t1.setTypeface(t1.getTypeface(), Typeface.BOLD);
+			// t1.setTypeface(t1.getTypeface(), Typeface.BOLD);
 			row.addView(t1);
 			t2 = new TextView(getBaseContext());
 			t2 = new TextView(getBaseContext());
@@ -161,7 +157,7 @@ public class SubmissionActivity extends Activity {
 			t1.setText(s1);
 			t1.setTextSize(25);
 			t1.setTextColor(Color.BLACK);
-			//t1.setTypeface(t1.getTypeface(), Typeface.BOLD);
+			// t1.setTypeface(t1.getTypeface(), Typeface.BOLD);
 			row.addView(t1);
 			t2 = new TextView(getBaseContext());
 			t2 = new TextView(getBaseContext());
@@ -172,8 +168,8 @@ public class SubmissionActivity extends Activity {
 			row.addView(t2);
 			subTable.addView(row, new TableLayout.LayoutParams(
 					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-			
-			s1 = "Description";	
+
+			s1 = "Description";
 			row = new TableRow(getBaseContext());
 			t1 = new TextView(getBaseContext());
 			t1.setText(s1);
@@ -187,8 +183,8 @@ public class SubmissionActivity extends Activity {
 			row.addView(t1);
 			subTable.addView(row, new TableLayout.LayoutParams(
 					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-			
-			s1 = subm.getDescription();	
+
+			s1 = subm.getDescription();
 			row = new TableRow(getBaseContext());
 			t1 = new TextView(getBaseContext());
 			t1.setText(s1);
@@ -198,13 +194,13 @@ public class SubmissionActivity extends Activity {
 			params1 = new TableRow.LayoutParams();
 			params1.weight = 1.0f;
 			t1.setLayoutParams(params1);
-			
+
 			t1.setTextColor(Color.BLACK);
 			row.addView(t1);
 			subTable.addView(row, new TableLayout.LayoutParams(
 					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-			
-			s1 = "Personal Note";	
+
+			s1 = "Personal Note";
 			row = new TableRow(getBaseContext());
 			t1 = new TextView(getBaseContext());
 			t1.setText(s1);
@@ -219,7 +215,7 @@ public class SubmissionActivity extends Activity {
 			row.addView(t1);
 			subTable.addView(row, new TableLayout.LayoutParams(
 					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-			
+
 			mCursor = mdb.selectSub(userID, courseID, subm.getSubId());
 			if (mCursor.getCount() > 0) {
 				mCursor.moveToFirst();
@@ -241,21 +237,21 @@ public class SubmissionActivity extends Activity {
 			subTable.addView(row, new TableLayout.LayoutParams(
 					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 
-			
 			Log.d("SUBM", "Displayed everything except buttons ");
 			// Notes button
 			row = new TableRow(getBaseContext());
-			
+
 			Button b1 = new Button(getBaseContext());
-            TableRow.LayoutParams params = new TableRow.LayoutParams();
+			TableRow.LayoutParams params = new TableRow.LayoutParams();
 			params.weight = 1.0f;
 			b1.setPadding(6, 6, 6, 6);
-            b1.setLayoutParams(params);
-            b1.setTextSize(25);
-            b1.setWidth(0);
-            b1.setTypeface(null, Typeface.BOLD);
-            b1.setTextColor(Color.WHITE);
-            b1.setBackground(getResources().getDrawable((R.drawable.blue_menu_btn)));
+			b1.setLayoutParams(params);
+			b1.setTextSize(25);
+			b1.setWidth(0);
+			b1.setTypeface(null, Typeface.BOLD);
+			b1.setTextColor(Color.WHITE);
+			b1.setBackground(getResources().getDrawable(
+					(R.drawable.blue_menu_btn)));
 			b1.setText("Manage Note");
 			row.setPadding(0, 6, 400, 6);
 			row.addView(b1);
@@ -274,7 +270,7 @@ public class SubmissionActivity extends Activity {
 				}
 			});
 
-			s1 = "Pictures";	
+			s1 = "Pictures";
 			row = new TableRow(getBaseContext());
 			t1 = new TextView(getBaseContext());
 			t1.setText(s1);
@@ -289,26 +285,26 @@ public class SubmissionActivity extends Activity {
 			row.addView(t1);
 			subTable.addView(row, new TableLayout.LayoutParams(
 					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-			
-			Log.d("SUBM", "Going to display the pictures");
+
 			// Pics button
 			TableRow row1 = new TableRow(getBaseContext());
 			Button b2 = new Button(getBaseContext());
-            params = new TableRow.LayoutParams();
+			params = new TableRow.LayoutParams();
 			params.weight = 0.5f;
 			b2.setPadding(6, 100, 6, 6);
-            b2.setLayoutParams(params);
-            b2.setTextSize(25);
-            b2.setWidth(0);
-            b2.setTypeface(null, Typeface.BOLD);
-            b2.setTextColor(Color.WHITE);
-            b2.setBackground(getResources().getDrawable((R.drawable.blue_menu_btn)));
+			b2.setLayoutParams(params);
+			b2.setTextSize(25);
+			b2.setWidth(0);
+			b2.setTypeface(null, Typeface.BOLD);
+			b2.setTextColor(Color.WHITE);
+			b2.setBackground(getResources().getDrawable(
+					(R.drawable.blue_menu_btn)));
 			b2.setText("Manage Pics");
 			row1.setPadding(0, 6, 400, 6);
 			row1.addView(b2);
 			subTable.addView(row1, new TableLayout.LayoutParams(
 					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-			
+
 			// manage pics
 			b2.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
@@ -320,6 +316,47 @@ public class SubmissionActivity extends Activity {
 					startActivity(sub2pics);
 				}
 			});
+
+			// Email button
+			row1 = new TableRow(getBaseContext());
+			b2 = new Button(getBaseContext());
+			params = new TableRow.LayoutParams();
+			params.weight = 0.5f;
+			b2.setPadding(6, 100, 6, 6);
+			b2.setLayoutParams(params);
+			b2.setTextSize(25);
+			b2.setWidth(0);
+			b2.setTypeface(null, Typeface.BOLD);
+			b2.setTextColor(Color.WHITE);
+			b2.setBackground(getResources().getDrawable(
+					(R.drawable.blue_menu_btn)));
+			b2.setText("Email Instructors");
+			row1.setPadding(0, 6, 400, 6);
+			row1.addView(b2);
+			subTable.addView(row1, new TableLayout.LayoutParams(
+					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+
+			// email instructor
+			b2.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					Intent i = new Intent(Intent.ACTION_SEND);
+					i.setType("message/rfc822");
+					i.putExtra(Intent.EXTRA_EMAIL,
+							new String[] { course.getEmail() });
+					i.putExtra(Intent.EXTRA_SUBJECT, subm.getSubName()
+							+ " Query");
+					try {
+						startActivity(Intent.createChooser(i, "Send mail..."));
+
+					} catch (android.content.ActivityNotFoundException ex) {
+						Toast toast = Toast.makeText(getBaseContext(),
+								"No Email Client Installed", Toast.LENGTH_LONG);
+						toast.setGravity(Gravity.CENTER, 0, 0);
+						toast.show();
+					}
+				}
+			});
+			
 		}
 	}
 
