@@ -260,11 +260,11 @@ public class SubmissionActivity extends Activity {
 			b1.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					Intent i = new Intent(getBaseContext(), NotesActivity.class);
-					i.putExtra("userID", userID);
-					i.putExtra("courseID", courseID);
-					i.putExtra("subm", subm);
-					startActivityForResult(i, 500);
+					Intent sub2notes = new Intent(getBaseContext(), NotesActivity.class);
+					sub2notes.putExtra("userID", userID);
+					sub2notes.putExtra("courseID", courseID);
+					sub2notes.putExtra("subm", subm);
+					startActivityForResult(sub2notes, 500);
 					overridePendingTransition(R.anim.slide_in_right,
 							R.anim.slide_out_left);
 				}
@@ -339,14 +339,14 @@ public class SubmissionActivity extends Activity {
 			// email instructor
 			b2.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
-					Intent i = new Intent(Intent.ACTION_SEND);
-					i.setType("message/rfc822");
-					i.putExtra(Intent.EXTRA_EMAIL,
+					Intent sub2email = new Intent(Intent.ACTION_SEND);
+					sub2email.setType("message/rfc822");
+					sub2email.putExtra(Intent.EXTRA_EMAIL,
 							new String[] { course.getEmail() });
-					i.putExtra(Intent.EXTRA_SUBJECT, subm.getSubName()
+					sub2email.putExtra(Intent.EXTRA_SUBJECT, subm.getSubName()
 							+ " Query");
 					try {
-						startActivity(Intent.createChooser(i, "Send mail..."));
+						startActivity(Intent.createChooser(sub2email, "Send mail..."));
 
 					} catch (android.content.ActivityNotFoundException ex) {
 						Toast toast = Toast.makeText(getBaseContext(),

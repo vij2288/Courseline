@@ -142,14 +142,14 @@ public class PicsActivity extends Activity {
 					ByteArrayInputStream imageStream = new ByteArrayInputStream(
 							imageName);
 					theImage = BitmapFactory.decodeStream(imageStream);
-					Intent intent = new Intent(getBaseContext(),
+					Intent pics2img = new Intent(getBaseContext(),
 							ImageActivity.class);
-					intent.putExtra("imagename", theImage);
-					intent.putExtra("imageid", name);
-					intent.putExtra("userID", userID);
-					intent.putExtra("courseID", courseID);
-					intent.putExtra("subm", subm);
-					startActivity(intent);
+					pics2img.putExtra("imagename", theImage);
+					pics2img.putExtra("imageid", name);
+					pics2img.putExtra("userID", userID);
+					pics2img.putExtra("courseID", courseID);
+					pics2img.putExtra("subm", subm);
+					startActivity(pics2img);
 				}
 			});
 		}
@@ -220,17 +220,17 @@ public class PicsActivity extends Activity {
 	}
 
 	public void callGallery() {
-		Intent intent = new Intent();
-		intent.setType("image/*");
-		intent.setAction(Intent.ACTION_GET_CONTENT);
-		intent.putExtra("crop", "true");
-		intent.putExtra("aspectX", 0);
-		intent.putExtra("aspectY", 0);
-		intent.putExtra("outputX", 400);
-		intent.putExtra("outputY", 300);
-		intent.putExtra("return-data", true);
+		Intent galleryIntent = new Intent();
+		galleryIntent.setType("image/*");
+		galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+		galleryIntent.putExtra("crop", "true");
+		galleryIntent.putExtra("aspectX", 0);
+		galleryIntent.putExtra("aspectY", 0);
+		galleryIntent.putExtra("outputX", 400);
+		galleryIntent.putExtra("outputY", 300);
+		galleryIntent.putExtra("return-data", true);
 		startActivityForResult(
-				Intent.createChooser(intent, "Complete action using"),
+				Intent.createChooser(galleryIntent, "Complete action using"),
 				PICK_FROM_GALLERY);
 
 	}
