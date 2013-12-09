@@ -69,6 +69,7 @@ public class DeletionActivity extends Activity {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	private void refreshTable() {
 		mdb = new DBUtil(this);
 		Cursor mCursor;

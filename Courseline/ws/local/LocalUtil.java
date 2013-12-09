@@ -11,6 +11,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import entities.Course;
@@ -24,9 +25,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@SuppressLint({ "DefaultLocale", "SimpleDateFormat" })
 public class LocalUtil {
-	// TODO all reading/writing to android storage will be implemented here
-
+	
+	/*
+	 * reads xml course file, parses fields and puts all 
+	 * submissions in a course object
+	 */
+	@SuppressLint("DefaultLocale")
 	public static void ImportCourseData(Student student, String filename) {
 
 		/* Use DOM XML Parser to parse Course data */
@@ -38,13 +44,10 @@ public class LocalUtil {
 			dBuilder = dbFactory.newDocumentBuilder();
 			doc = dBuilder.parse(fXmlFile);
 		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -125,8 +128,6 @@ public class LocalUtil {
 						s.setSubType(subType);
 					}
 
-					// Log.d("XML", "relDate: " +
-					// subElement.getElementsByTagName("releaseDate").item(0).getTextContent());
 					if (subElement.getElementsByTagName("releaseDate").item(0) != null) {
 						DateFormat formatter = new SimpleDateFormat(
 								"MM/dd/yyyy hh:mm");
@@ -140,10 +141,8 @@ public class LocalUtil {
 									.getElementsByTagName("dueDate").item(0)
 									.getTextContent());
 						} catch (DOMException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						} catch (ParseException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 						s.setReleaseDate(releaseDate);
@@ -180,8 +179,17 @@ public class LocalUtil {
 			}
 		}
 		student.courses.add(c);
+		
+		// remove course file
+		File file = new File(filename);
+		file.delete();
 	}
 
+	/*
+	 * Check if user is allowed to add course to his Dashboard
+	 * returns true if allowed,
+	 * else returns false
+	 */
 	public static boolean checkUsersFile(String email, String filename) {
 
 		Log.d("LUTIL", "fname: " + filename);
@@ -194,22 +202,21 @@ public class LocalUtil {
 			dBuilder = dbFactory.newDocumentBuilder();
 			doc = dBuilder.parse(fXmlFile);
 		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
+		// get list of allowed users
 		doc.getDocumentElement().normalize();
 		NodeList nList = doc.getElementsByTagName("allowed_users");
 
 		Node alUsers = nList.item(0);
 		Element el = (Element) alUsers;
 		int i = 0;
+		// check if userID present in the xml file
 		while (el.getElementsByTagName("user").item(i) != null) {
 			String uname = el.getElementsByTagName("user").item(i)
 					.getTextContent();
@@ -220,21 +227,6 @@ public class LocalUtil {
 			}
 			i++;
 		}
-		/*
-		for (int i = 0; i < nList.getLength(); i++) {
-			Node usr = nList.item(i);
-
-			// Parse Course-specific fields
-			if (usr.getNodeType() == Node.ELEMENT_NODE) {
-				Element eElement = (Element) usr;
-
-				String user = eElement.getElementsByTagName("user").item(0)
-						.getTextContent();
-				if ((user != null) && (user.equalsIgnoreCase(email))) {
-					return true;
-				}
-			}
-		}*/
 		return false;
 	}
 

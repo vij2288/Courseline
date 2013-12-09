@@ -23,6 +23,14 @@ public class MainActivity extends Activity {
 	Cursor mCursor;
 	EditText email = null, pwd = null;
 
+	/*
+	 * CourseLine
+	 * 
+	 * Team Deccan
+	 * Sagar Medikeri, Vijith Venkatesh, Chidambaram Bhat
+	 * 
+	 * App starts here. This is the Sign Up activity
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -32,12 +40,14 @@ public class MainActivity extends Activity {
 
 		mdb = new DBUtil(this);
 		student = new Student();
-
+		
+		// Get the form fields
 		email = (EditText) findViewById(R.id.loginEmail);
 		pwd = (EditText) findViewById(R.id.loginPassword);
 		Button signin = (Button) findViewById(R.id.signinButton);
 		Button signup = (Button) findViewById(R.id.signupButton);
 
+		// sanity check the form fields and sign in the user if credentials are correct
 		signin.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
@@ -94,6 +104,7 @@ public class MainActivity extends Activity {
 			}
 		});
 
+		// take user to Sign up activity if he wishes
 		signup.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
@@ -105,78 +116,7 @@ public class MainActivity extends Activity {
 			}
 		});
 
-		/*
-		 * // Parse static file String filename =
-		 * Environment.getExternalStorageDirectory().getPath() +
-		 * "/Download/cmu_f13_15213.xml";
-		 * System.out.println("Static file path: " + filename);
-		 * LocalUtil.ImportCourseData(student, filename);
-		 * 
-		 * filename = Environment.getExternalStorageDirectory().getPath() +
-		 * "/Download/cmu_f13_18641.xml";
-		 * System.out.println("Static file path: " + filename);
-		 * LocalUtil.ImportCourseData(student, filename);
-		 * 
-		 * filename = Environment.getExternalStorageDirectory().getPath() +
-		 * "/Download/cmu_f13_18644.xml";
-		 * System.out.println("Static file path: " + filename);
-		 * LocalUtil.ImportCourseData(student, filename);
-		 * 
-		 * System.out.println(student.toString());
-		 */
-
-		/*
-		 * ***************************Database
-		 * testing*******************************************************
-		 * ******************************DONT
-		 * DELETE*********************************************************
-		 * ******
-		 * ****************************************************************
-		 * **************************** Log.d("sumne","before calling insert");
-		 * //Integer.parseInt(student.courses.get(1).getCourseNumber()) //
-		 * mdb.insertUser("Giri","giri" ,15213 , 0, 0, 0, 0);
-		 * System.out.println("table"); mCursor=mdb.selectUser("giri"); if
-		 * (mCursor.getCount() > 0) { mCursor.moveToFirst();
-		 * System.out.println("The first course is "+mCursor.getLong(2)); } else
-		 * System.out.println("Select didn't work");
-		 * System.out.println("going to delete"); mdb.deleteUser("giri");
-		 * System.out.println("deleted"); mCursor=mdb.selectUser("giri"); if
-		 * (mCursor.getCount() > 0) { mCursor.moveToFirst();
-		 * System.out.println("The first course is "+mCursor.getLong(2)); } else
-		 * System.out.println("Select didn't work");
-		 */
-
-		/*
-		 * Intent main2home = new Intent(getBaseContext(), HomeActivity.class);
-		 * main2home.putExtra("student", student); startActivity(main2home);
-		 */
 	}
-
-	/*
-	 * @Override protected void onResume() { super.onResume();
-	 * 
-	 * }
-	 * 
-	 * @Override protected void onRestart() { super.onRestart();
-	 * 
-	 * }
-	 * 
-	 * @Override protected void onStart() { super.onStart();
-	 * 
-	 * }
-	 * 
-	 * @Override protected void onPause() { super.onPause();
-	 * 
-	 * }
-	 * 
-	 * @Override protected void onStop() { super.onStop();
-	 * 
-	 * }
-	 * 
-	 * @Override protected void onDestroy() { super.onDestroy();
-	 * 
-	 * }
-	 */
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -29,13 +29,17 @@ import android.widget.TextView;
 
 public class HomeActivity extends FragmentActivity {
 
+	// Fragment manager for the Charting Fragment
 	FragmentManager fragmentManager = getSupportFragmentManager();
 	FragmentTransaction fragmentTransaction = fragmentManager
 			.beginTransaction();
 	ChartFragment fragment = new ChartFragment();
+	
 	public String userID = null;
 	DBUtil mdb;
 	Cursor mCursor;
+	
+	// Colors of the course lines
 	int[] color = new int[] { 0xff660066, 0xffff0000, 0xff006633, 0xffff007f, 0xff0000ff};
 
 	@Override
@@ -45,15 +49,8 @@ public class HomeActivity extends FragmentActivity {
 		getActionBar().setIcon(R.drawable.tbar_icon);
 		setContentView(R.layout.deccan_courseline_activity_home);
 
+		// Get userID from intent
 		userID = getIntent().getStringExtra("userID");
-
-		// Student student = (Student)
-		// getIntent().getSerializableExtra("student");
-		/*
-		 * ChartFragment chart = new ChartFragment();
-		 * getSupportFragmentManager().beginTransaction()
-		 * .replace(R.id.chartView, chart).commit();
-		 */
 
 		// display "Filters:"
 		TableRow name = (TableRow) findViewById(R.id.rowName);
@@ -90,16 +87,18 @@ public class HomeActivity extends FragmentActivity {
 			}
 		});
 
+		// Attach the fragment to the parent activity
 		fragmentTransaction.replace(R.id.chartView, fragment);
 		fragmentTransaction.commit();
 		fragment.userID = new String(userID);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onResume() {
 		super.onResume();
 
-		// initialize subm present hashmap
+		// Initialize subm present hashmap
 		HashMap<SubType, Boolean> submPresentMap = new HashMap<SubType, Boolean>();
 		for (SubType type : SubType.values()) {
 			submPresentMap.put(type, Boolean.FALSE);
@@ -108,24 +107,29 @@ public class HomeActivity extends FragmentActivity {
 		mdb = new DBUtil(this);
 		// display courses & checkboxes
 		TableLayout courses = (TableLayout) findViewById(R.id.tableCourses);
+		// clear all filters
 		courses.removeAllViews();
+		// get cursor to user's db entry
 		mCursor = mdb.selectUser(userID);
 		Log.d("HOME", "got mCursor");
 		if (mCursor.getCount() > 0) {
 			mCursor.moveToFirst();
 			int count = mCursor.getInt(8);
 			int i = 0;
+			// for each course user has added
 			while (i != count) {
 				Log.d("HOME", "displaying courses/checkboxes " + i);
 				String c_id = mCursor.getString(2 + i);
 				Course course = null;
 				course = mdb.selectCourse(c_id);
+				
 				Iterator<Submission> it = course.submissions.iterator();
 				while (it.hasNext()) {
 					Submission sub = it.next();
 					submPresentMap.put(sub.getSubType(), Boolean.TRUE);
 				}
 
+				// display Course filters
 				TableRow row1 = new TableRow(this);
 				TextView t1 = new TextView(this);
 				t1.setText(c_id);
@@ -134,18 +138,18 @@ public class HomeActivity extends FragmentActivity {
 				row1.addView(t1);
 				CheckBox c1 = new CheckBox(this);
 				c1.setChecked(true);
-				//c1.setPadding(0, 0, 40, 0);
 				row1.addView(c1);
 				row1.setPadding(25, 0, 40, 0);
 				courses.addView(row1, new TableLayout.LayoutParams(
 						LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 
 				final int c_num = i;
-				// Install CheckBox listener
+				// Install CheckBox listener for courses
 				c1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 					@Override
 					public void onCheckedChanged(CompoundButton buttonView,
 							boolean isChecked) {
+						// set flags in Fragment for course filters to take effect on the chart
 						fragment.crs[c_num] = isChecked;
 						fragment.drawChart();
 					}
@@ -161,9 +165,12 @@ public class HomeActivity extends FragmentActivity {
 		int i = 0;
 		TableRow row1 = null;
 		for (SubType type : SubType.values()) {
+			// put filters over 2 columns
 			if (i % 2 == 0) {
 				row1 = new TableRow(this);
 			}
+			
+			// Pluralize the submission text
 			TextView t1 = new TextView(this);
 			if (type == SubType.QUIZ)
 				t1.setText(type.toString().replace("_", " ") + "ZES");
@@ -174,6 +181,7 @@ public class HomeActivity extends FragmentActivity {
 			row1.addView(t1);
 			CheckBox c1 = new CheckBox(this);
 
+			// enable checkboxes only of submissions that are present in the course selection
 			if (submPresentMap.get(type) == Boolean.FALSE) {
 				t1.setTextColor(Color.GRAY);
 				c1.setClickable(false);
@@ -185,11 +193,12 @@ public class HomeActivity extends FragmentActivity {
 			row1.addView(c1);
 
 			final int subtype_num = i;
-			// Install CheckBox listener
+			// Install CheckBox listener for submission
 			c1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 				@Override
 				public void onCheckedChanged(CompoundButton buttonView,
 						boolean isChecked) {
+					// set flags in Fragment for submission filters to take effect on the chart
 					fragment.subs[subtype_num] = isChecked;
 					fragment.drawChart();
 				}
@@ -224,6 +233,7 @@ public class HomeActivity extends FragmentActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	// take care of activity transition appropriately
     	overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
     

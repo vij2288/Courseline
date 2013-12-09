@@ -23,6 +23,9 @@ public class RegisterActivity extends Activity {
 	Cursor mCursor;
 	EditText fname = null, email = null, pwd = null, repwd = null;
 
+	/*
+	 * Registration Activity
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -31,12 +34,14 @@ public class RegisterActivity extends Activity {
 		setContentView(R.layout.deccan_courseline_activity_register);
 		mdb = new DBUtil(this);
 
+		// get form fields
 		fname = (EditText) findViewById(R.id.firstName);
 		email = (EditText) findViewById(R.id.signupEmail);
 		pwd = (EditText) findViewById(R.id.signupPwd);
 		repwd = (EditText) findViewById(R.id.signupRePwd);
 		Button signup = (Button) findViewById(R.id.signupButton);
 
+		// sanity check the input fields and register the user
 		signup.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
@@ -49,6 +54,7 @@ public class RegisterActivity extends Activity {
 					
 					Log.d("REGISTER", "pwd: " + pwd.toString() + " repwd: "
 							+ repwd.toString());
+					// if passwords match
 					if (pwd.getText().toString()
 							.equals(repwd.getText().toString())) {
 						mdb.insertUser(fname.getText().toString(), email
@@ -65,20 +71,22 @@ public class RegisterActivity extends Activity {
 						startActivityForResult(reg2home, 500);
 						overridePendingTransition(R.anim.slide_in_right,
 								R.anim.slide_out_left);
-						// if passwords mismatch
 					} else {
+						// if passwords don't match
 						Toast toast = Toast.makeText(getBaseContext(),
 								"Password mismatch! Retry.", Toast.LENGTH_LONG);
 						toast.setGravity(Gravity.CENTER, 0, 0);
 						toast.show();
 					}
 				} else {
+					// if email not valid
 					Toast toast = Toast.makeText(getBaseContext(),
 							"Please enter valid email and password",
 							Toast.LENGTH_LONG);
 					toast.setGravity(Gravity.CENTER, 0, 0);
 					toast.show();
 				}
+				// clear fields
 				fname.setText("");
 				email.setText("");
 				pwd.setText("");
@@ -125,6 +133,7 @@ public class RegisterActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// take care of return transition direction
 		overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
 	}
 

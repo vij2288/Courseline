@@ -67,11 +67,12 @@ public class AdditionActivity extends Activity {
 
 		// Search/Add Button click listeners
 		search.setOnClickListener(new OnClickListener() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void onClick(View arg0) {
 				// clear table
-				TableLayout clr = (TableLayout) findViewById(R.id.resultsTable);
-				clr.removeAllViews();
+				TableLayout results = (TableLayout) findViewById(R.id.resultsTable);
+				results.removeAllViews();
 				Log.d("ADDITION", "Inside on click of search");
 
 				// user allowed?
@@ -93,7 +94,6 @@ public class AdditionActivity extends Activity {
 									.getText().toString());
 							if (course != null) {
 								Log.d("ADDITION", "found course locally");
-								TableLayout results = (TableLayout) findViewById(R.id.resultsTable);
 								results.removeAllViews();
 								TableRow row1 = new TableRow(getBaseContext());
 								TextView t1 = new TextView(getBaseContext());
@@ -280,7 +280,6 @@ public class AdditionActivity extends Activity {
 								});
 							} else {
 
-								TableLayout results = (TableLayout) findViewById(R.id.resultsTable);
 								results.removeAllViews();
 								String url = "https://dl.dropboxusercontent.com/u/102619389/"
 										+ cID + ".xml";
@@ -535,13 +534,10 @@ public class AdditionActivity extends Activity {
 					}
 
 				} catch (NotFoundException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (ExecutionException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

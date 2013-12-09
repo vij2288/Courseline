@@ -15,7 +15,6 @@ import android.util.Log;
 
 public class RemoteUtil extends AsyncTask<String, Void, String> {
 	protected String doInBackground(String... url) {
-		String msg;
 		try {
 			URL url1 = new URL(url[0]);
 			// create the new connection
@@ -54,11 +53,6 @@ public class RemoteUtil extends AsyncTask<String, Void, String> {
 			// this will be used in reading the data from the internet
 			InputStream inputStream = urlConnection.getInputStream();
 
-			// this is the total size of the file
-			int totalSize = urlConnection.getContentLength();
-			// variable to store total downloaded bytes
-			int downloadedSize = 0;
-
 			// create a buffer...
 			byte[] buffer = new byte[1024];
 			int bufferLength = 0; // used to store a temporary size of the
@@ -70,8 +64,6 @@ public class RemoteUtil extends AsyncTask<String, Void, String> {
 				// add the data in the buffer to the file in the file output
 				// stream (the file on the sd card
 				fileOutput.write(buffer, 0, bufferLength);
-				// add up the size so we know how much is downloaded
-				downloadedSize += bufferLength;
 			}
 			// close the output stream when done
 			fileOutput.close();

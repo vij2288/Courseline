@@ -6,20 +6,19 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 
-import deccan.courseline.R;
-
 import entities.Course;
 import entities.SubType;
 import entities.Submission;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.EditText;
 
+@SuppressLint({ "SimpleDateFormat", "DefaultLocale" })
 public class DBUtil extends SQLiteOpenHelper {
 
 	private static String databaseName = "CourselineDB";
@@ -204,7 +203,6 @@ public class DBUtil extends SQLiteOpenHelper {
 					releaseDate = formatter.parse(mCursor.getString(6));
 					dueDate = formatter.parse(mCursor.getString(7));
 				} catch (ParseException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				sub.setReleaseDate(releaseDate);

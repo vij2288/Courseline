@@ -51,10 +51,10 @@ public class SubmissionActivity extends Activity {
 		setTitle("Submission Details");
 		getActionBar().setIcon(R.drawable.tbar_icon);
 		setContentView(R.layout.deccan_courseline_activity_submission);
-		// dataList = (ListView) findViewById(R.id.list);
-
+		
 		mdb = new DBUtil(this);
 
+		// Receive data from intent
 		userID = getIntent().getStringExtra("userID");
 		Log.d("SUBM", "User ID: " + userID);
 		courseID = getIntent().getStringExtra("courseID");
@@ -65,44 +65,42 @@ public class SubmissionActivity extends Activity {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onResume() {
 		super.onResume();
 
 		if (subm != null && course != null) {
 			Log.d("SUBM", "Inside on resume's condition ");
-			/*
-			 * String subHead = getString(R.string.sub_head); subHead =
-			 * "SUBMISSION"; ((TextView)
-			 * findViewById(R.id.sub_head)).setText(subHead);
-			 */
 			TableLayout subTable = (TableLayout) findViewById(R.id.subTable);
+			// clear table
 			subTable.removeAllViews();
-			/*
-			 * RelativeLayout.LayoutParams parm =
-			 * (RelativeLayout.LayoutParams)subTable.getLayoutParams();
-			 * parm.width = 600;//RelativeLayout.LayoutParams.MATCH_PARENT;
-			 * subTable.setLayoutParams(parm);
-			 */String s1 = null, s2 = null;
+			String s1 = null, s2 = null;
 
 			s1 = course.getCourseName();
+			// display course name
 			TableRow row = new TableRow(getBaseContext());
 			TextView t1 = new TextView(getBaseContext());
 			t1.setText(s1);
 			t1.setTextSize(25);
+			t1.setWidth(0);
+			TableRow.LayoutParams params1 = new TableRow.LayoutParams();
+			params1.weight = 1.0f;
+			t1.setLayoutParams(params1);
 			t1.setTextColor(Color.DKGRAY);
 			t1.setTypeface(t1.getTypeface(), Typeface.BOLD);
 			row.addView(t1);
 			subTable.addView(row, new TableLayout.LayoutParams(
 					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 
+			// display submission name
 			s1 = subm.getSubName();
 			row = new TableRow(getBaseContext());
 			t1 = new TextView(getBaseContext());
 			t1.setText(s1);
 			t1.setTextSize(50);
 			t1.setWidth(0);
-			TableRow.LayoutParams params1 = new TableRow.LayoutParams();
+			params1 = new TableRow.LayoutParams();
 			params1.weight = 1.0f;
 			t1.setLayoutParams(params1);
 			t1.setPadding(0, 10, 0, 0);
@@ -112,6 +110,7 @@ public class SubmissionActivity extends Activity {
 			subTable.addView(row, new TableLayout.LayoutParams(
 					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 
+			// display Release date
 			s1 = "Released on";
 			s2 = subm.getReleaseDate().toString();
 			row = new TableRow(getBaseContext());
@@ -119,7 +118,6 @@ public class SubmissionActivity extends Activity {
 			t1.setText(s1);
 			t1.setTextSize(25);
 			t1.setTextColor(Color.BLACK);
-			// t1.setTypeface(t1.getTypeface(), Typeface.BOLD);
 			row.addView(t1);
 			TextView t2 = new TextView(getBaseContext());
 			t2 = new TextView(getBaseContext());
@@ -131,6 +129,7 @@ public class SubmissionActivity extends Activity {
 			subTable.addView(row, new TableLayout.LayoutParams(
 					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 
+			// display Due date
 			s1 = "Due on";
 			s2 = subm.getDueDate().toString();
 			row = new TableRow(getBaseContext());
@@ -138,7 +137,6 @@ public class SubmissionActivity extends Activity {
 			t1.setText(s1);
 			t1.setTextSize(25);
 			t1.setTextColor(Color.BLACK);
-			// t1.setTypeface(t1.getTypeface(), Typeface.BOLD);
 			row.addView(t1);
 			t2 = new TextView(getBaseContext());
 			t2 = new TextView(getBaseContext());
@@ -150,6 +148,7 @@ public class SubmissionActivity extends Activity {
 			subTable.addView(row, new TableLayout.LayoutParams(
 					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 
+			// display Weightage %
 			s1 = "Weightage";
 			s2 = Integer.toString(subm.getWeightPercent()) + "%";
 			row = new TableRow(getBaseContext());
@@ -157,7 +156,6 @@ public class SubmissionActivity extends Activity {
 			t1.setText(s1);
 			t1.setTextSize(25);
 			t1.setTextColor(Color.BLACK);
-			// t1.setTypeface(t1.getTypeface(), Typeface.BOLD);
 			row.addView(t1);
 			t2 = new TextView(getBaseContext());
 			t2 = new TextView(getBaseContext());
@@ -169,6 +167,7 @@ public class SubmissionActivity extends Activity {
 			subTable.addView(row, new TableLayout.LayoutParams(
 					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 
+			// display the Submission description
 			s1 = "Description";
 			row = new TableRow(getBaseContext());
 			t1 = new TextView(getBaseContext());
@@ -190,16 +189,15 @@ public class SubmissionActivity extends Activity {
 			t1.setText(s1);
 			t1.setTextSize(20);
 			t1.setWidth(0);
-
 			params1 = new TableRow.LayoutParams();
 			params1.weight = 1.0f;
 			t1.setLayoutParams(params1);
-
 			t1.setTextColor(Color.BLACK);
 			row.addView(t1);
 			subTable.addView(row, new TableLayout.LayoutParams(
 					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 
+			// display Personal notes
 			s1 = "Personal Note";
 			row = new TableRow(getBaseContext());
 			t1 = new TextView(getBaseContext());
@@ -216,6 +214,7 @@ public class SubmissionActivity extends Activity {
 			subTable.addView(row, new TableLayout.LayoutParams(
 					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 
+			// get Notes from db
 			mCursor = mdb.selectSub(userID, courseID, subm.getSubId());
 			if (mCursor.getCount() > 0) {
 				mCursor.moveToFirst();
@@ -229,7 +228,6 @@ public class SubmissionActivity extends Activity {
 			t1.setText(s1);
 			t1.setTextSize(20);
 			t1.setWidth(0);
-
 			params1.weight = 1.0f;
 			t1.setLayoutParams(params1);
 			t1.setTextColor(Color.BLACK);
@@ -238,9 +236,9 @@ public class SubmissionActivity extends Activity {
 					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 
 			Log.d("SUBM", "Displayed everything except buttons ");
+
 			// Notes button
 			row = new TableRow(getBaseContext());
-
 			Button b1 = new Button(getBaseContext());
 			TableRow.LayoutParams params = new TableRow.LayoutParams();
 			params.weight = 1.0f;
@@ -257,9 +255,11 @@ public class SubmissionActivity extends Activity {
 			row.addView(b1);
 			subTable.addView(row, new TableLayout.LayoutParams(
 					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+			// Notes button onClick listener
 			b1.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
+					// Pass intent to Notes activity
 					Intent sub2notes = new Intent(getBaseContext(), NotesActivity.class);
 					sub2notes.putExtra("userID", userID);
 					sub2notes.putExtra("courseID", courseID);
@@ -270,6 +270,7 @@ public class SubmissionActivity extends Activity {
 				}
 			});
 
+			// display Pictures button
 			s1 = "Pictures";
 			row = new TableRow(getBaseContext());
 			t1 = new TextView(getBaseContext());
@@ -305,9 +306,10 @@ public class SubmissionActivity extends Activity {
 			subTable.addView(row1, new TableLayout.LayoutParams(
 					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 
-			// manage pics
+			// manage pics - onClick listener
 			b2.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
+					// Pass intent to Pics activity
 					Intent sub2pics = new Intent(getBaseContext(),
 							PicsActivity.class);
 					sub2pics.putExtra("userID", userID);
@@ -339,6 +341,7 @@ public class SubmissionActivity extends Activity {
 			// email instructor
 			b2.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
+					// Pass intent to Email activity
 					Intent sub2email = new Intent(Intent.ACTION_SEND);
 					sub2email.setType("message/rfc822");
 					sub2email.putExtra(Intent.EXTRA_EMAIL,
@@ -397,6 +400,7 @@ public class SubmissionActivity extends Activity {
 		return true;
 	}
 
+	@SuppressWarnings("deprecation")
 	public void displaySubmission(TableLayout subTable, String s1, String s2) {
 		TableRow row = new TableRow(getBaseContext());
 		TextView t1 = new TextView(getBaseContext());
@@ -415,6 +419,7 @@ public class SubmissionActivity extends Activity {
 		Intent cameraIntent = new Intent(
 				android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 		Log.d("SUBM", "Calling the camera Image capture intent");
+		// Provide option to crop pics and specify the output image size
 		cameraIntent.putExtra("crop", "true");
 		cameraIntent.putExtra("aspectX", 0);
 		cameraIntent.putExtra("aspectY", 0);
@@ -428,6 +433,7 @@ public class SubmissionActivity extends Activity {
 		Intent intent = new Intent();
 		intent.setType("image/*");
 		intent.setAction(Intent.ACTION_GET_CONTENT);
+		// Provide option to crop pics and specify the output image size
 		intent.putExtra("crop", "true");
 		intent.putExtra("aspectX", 0);
 		intent.putExtra("aspectY", 0);

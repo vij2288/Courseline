@@ -8,7 +8,6 @@ import local.DBUtil;
 import entities.Course;
 import entities.Notes;
 import entities.Submission;
-import android.R.color;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -18,18 +17,13 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -80,7 +74,6 @@ public class PicsActivity extends Activity {
 		builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
 
 			public void onClick(DialogInterface dialog, int which) {
-				// TODO Auto-generated method stub
 				Log.d("Selected Item", String.valueOf(which));
 				if (which == 0) {
 					callCamera();
@@ -192,6 +185,7 @@ public class PicsActivity extends Activity {
 		return true;
 	}
 
+	@SuppressWarnings("deprecation")
 	public void displaySubmission(TableLayout subTable, String s1, String s2) {
 		TableRow row = new TableRow(getBaseContext());
 		TextView t1 = new TextView(getBaseContext());

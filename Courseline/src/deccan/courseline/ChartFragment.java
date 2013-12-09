@@ -21,6 +21,7 @@ import entities.Course;
 import entities.SubType;
 import entities.Submission;
 import android.support.v4.app.Fragment;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -33,28 +34,39 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 
+@SuppressLint({ "UseSparseArrays", "SimpleDateFormat" })
 public class ChartFragment extends Fragment {
 
+	// Charting variables 
 	GraphicalView chartView = null;
 	XYMultipleSeriesRenderer render = new XYMultipleSeriesRenderer();
 	XYMultipleSeriesDataset seriesV = new XYMultipleSeriesDataset();
+	
+	// Colors for course lines
 	int[] color = new int[] { 0xff660066, 0xffff0000, 0xff006633, 0xffff007f, 0xff0000ff};
-	int count = 0;
+	
+	// flags for communication between parent activity and fragment
 	boolean[] crs = new boolean[5];
 	boolean[] subs = new boolean[SubType.values().length];
+	
+	// maintain mapping between submissions and their location on the chart
 	HashMap<LocationTuple, Submission> submMap = new HashMap<LocationTuple, Submission>();
 	HashMap<Integer, String> courseMap = new HashMap<Integer, String>();
+	
+	// db variables
 	DBUtil mdb;
 	Cursor mCursor;
+	
 	public String userID = null;
-
+	int count = 0;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.deccan_courseline_activity_chart,
 				container, false);
 
-		// initialize flags
+		// Initialize flags
 		for (int i = 0; i < 5; i++) {
 			crs[i] = true;
 		}
@@ -79,11 +91,14 @@ public class ChartFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+		
+		// update chart on resume
 		drawChart();
 	}
 
 	@SuppressWarnings("deprecation")
 	public void drawChart() {
+		// Clear dataset and renderers
 		seriesV.clear();
 		render.removeAllRenderers();
 
@@ -104,27 +119,28 @@ public class ChartFragment extends Fragment {
 					String c_id = mCursor.getString(2 + i);
 					Log.d("CHART", "-" + c_id);
 					Course course = mdb.selectCourse(c_id);
-					courseMap.put(i, c_id);
+					courseMap.put((10*i), c_id);
+					
 					// for all submissions in a course
 					Iterator<Submission> it = course.submissions.iterator();
 					XYValueSeries values = new XYValueSeries(c_id);
-					// values.add(1f, i, 0);
 					while (it.hasNext()) {
 						Submission sub = it.next();
-
+						
+						// if submission flag set, render it on chart
 						if (subs[SubType.valueOf(sub.getSubType().toString())
 								.ordinal()] == true) {
 							Calendar c = Calendar.getInstance();
 							c.setTime(sub.getDueDate());
 							double day_yr = (double) c
 									.get(Calendar.DAY_OF_YEAR);
-							LocationTuple loc = new LocationTuple(day_yr, i);
+							LocationTuple loc = new LocationTuple(day_yr, (10*i));
 							submMap.put(loc, sub);
-
 							Log.d("CHART",
 									"--" + sub.getSubName() + " (" + day_yr
 											+ ", " + i + ") = "
 											+ sub.getWeightPercent());
+							
 							// add value & annotation for each submission
 							values.add(day_yr, 10*i, sub.getWeightPercent()*3);
 							String annot = sub.getSubName()
@@ -136,7 +152,7 @@ public class ChartFragment extends Fragment {
 									(10*i - 2));
 						}
 					}
-					// add renderer
+					// initialize renderer
 					Align align = Align.LEFT;
 					XYSeriesRenderer render1 = new XYSeriesRenderer();
 					render1.setColor(color[i]);
@@ -144,6 +160,7 @@ public class ChartFragment extends Fragment {
 					render1.setAnnotationsColor(color[i]);
 					render1.setAnnotationsTextAlign(align);
 
+					// add course's dataset and renderer
 					seriesV.addSeries(values);
 					render.addSeriesRenderer(render1);
 				}
@@ -152,6 +169,7 @@ public class ChartFragment extends Fragment {
 			}
 		}
 
+		// Configure Multiple Renderer
 		Log.d("CHART", "setting view window");
 		// Get today and set ranges starting from today
 		Date date = new Date();
@@ -168,18 +186,9 @@ public class ChartFragment extends Fragment {
 					render.getXAxisMax(), render.getYAxisMin(),
 					render.getYAxisMax() });
 		}
-		// render.setXAxisMin(today);
-		// render.setXAxisMax(today+31);
-		// render.setYAxisMin(-10);
-		// render.setYAxisMax(10);
-
-		// render.setXLabels(50);
-		// render.setPanLimits(new double[] { 1, 500, -10, 10 });
-		// render.setZoomLimits(new double[] { 1, 500, -10, 10 });
-
-		 render.setShowGrid(true);
-		 render.setGridColor(Color.GRAY);
-
+		
+		render.setShowGrid(true);
+		render.setGridColor(Color.GRAY);
 		render.setAxisTitleTextSize(16);
 		render.setChartTitleTextSize(20);
 		render.setLabelsTextSize(20);
@@ -192,17 +201,12 @@ public class ChartFragment extends Fragment {
 		// Print Month on X-axis
 		int day1;
 		int year = c.get(Calendar.YEAR);
-		int nextyr = year + 1;
 		GregorianCalendar gc = null;
-		// for (; year <= nextyr; year++) {
 		for (int month = 0; month < 12; month++) {
 			gc = new GregorianCalendar(year, month, 1);
 			date = gc.getTime();
 			c.setTime(date);
 			day1 = c.get(Calendar.DAY_OF_YEAR);
-			// System.out.println("Day#: " + day1 + " Month: " +
-			// c.getDisplayName(Calendar.MONTH,
-			// Calendar.SHORT, Locale.getDefault()));
 			render.addTextLabel(
 					day1,
 					c.getDisplayName(Calendar.MONTH, Calendar.SHORT,
@@ -214,12 +218,12 @@ public class ChartFragment extends Fragment {
 							Locale.getDefault())
 							+ " 15");
 		}
-		// }
 		render.addTextLabel(today, "Today");
 		render.setXLabelsAlign(Align.CENTER);
 		render.setXLabelsPadding(15);
 		render.setXLabels(0);
 
+		// if not here from onCreate(), just repaint and return
 		if (count == 1) {
 			chartView.repaint();
 			return;
@@ -230,26 +234,9 @@ public class ChartFragment extends Fragment {
 		LinearLayout layout = (LinearLayout) getActivity().findViewById(
 				R.id.chartLayout);
 
-		// String[] types = new String[] { BubbleChart.TYPE, BubbleChart.TYPE,
-		// BubbleChart.TYPE, LineChart.TYPE};
-
 		chartView = ChartFactory.getBubbleChartView(getActivity(), seriesV,
 				render);
-		// chartView = ChartFactory.getCombinedXYChartView(getActivity(),
-		// dataset, render, types);
-		/*
-		 * // Zoom Listener chartView.addZoomListener(new ZoomListener() {
-		 * 
-		 * @Override public void zoomReset() {}
-		 * 
-		 * @Override public void zoomApplied(ZoomEvent e) { zoomLevel *=
-		 * e.getZoomRate(); Log.d("ZOOM",
-		 * "zoom: "+String.valueOf(e.getZoomRate()+", zoomLevel: "+zoomLevel));
-		 * if ((zoomLevel > 1.5) && (detailsFlag == false)) { detailsFlag =
-		 * true; drawChart(); } else if ((zoomLevel <= 1.5) && (detailsFlag ==
-		 * true)) { detailsFlag = false; drawChart(); } } }, true, true);
-		 */
-
+		
 		// Clickable bubbles
 		render.setClickEnabled(true);
 		render.setSelectableBuffer(10);
@@ -271,6 +258,7 @@ public class ChartFragment extends Fragment {
 									+ seriesSelection.getXValue() + ", Y="
 									+ seriesSelection.getValue());
 
+					// Find appropriate submission tapped on and pass intent to Submission activity
 					Intent chart2sub = new Intent(getActivity(),
 							SubmissionActivity.class);
 					LocationTuple curLoc = new LocationTuple(seriesSelection
@@ -301,7 +289,6 @@ public class ChartFragment extends Fragment {
 
 		layout.addView(chartView, new LayoutParams(LayoutParams.FILL_PARENT,
 				LayoutParams.FILL_PARENT));
-		// mdb.close();
 	}
 
 	@Override
